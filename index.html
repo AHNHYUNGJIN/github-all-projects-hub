@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHNHYUNGJIN GitHub & Vercel 통합 포트폴리오 & 프로젝트 허브</title>
+  <meta name="description" content="GitHub에 공개/배포된 모든 프로젝트, 라이브 웹앱, 개발 매뉴얼 및 체육/AI 도구 모음 마스터 대시보드">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: rgba(22, 30, 46, 0.75);
+      --card-hover: rgba(30, 41, 59, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      
+      --accent-blue: #38bdf8;
+      --accent-indigo: #6366f1;
+      --accent-green: #34d399;
+      --accent-purple: #c084fc;
+      --accent-amber: #fbbf24;
+      
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 10% 10%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+        radial-gradient(at 90% 90%, rgba(99, 102, 241, 0.12) 0px, transparent 50%);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 5rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
+    header {
+      padding: 4rem 0 2.5rem;
+      text-align: center;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: var(--accent-blue);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      font-size: 1.15rem;
+      color: var(--text-sub);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Stats Overview */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.75rem;
+      text-align: center;
+      min-width: 160px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Controls: Search & Filter */
+    .controls-wrapper {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.25rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.85rem 1.2rem 0.85rem 2.8rem;
+      background: rgba(9, 13, 22, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-indigo);
+      border-color: var(--accent-indigo);
+      color: white;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2rem; }
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .project-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.85rem;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      word-break: break-all;
+    }
+
+    .tag-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+
+    .tag-live {
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      color: var(--accent-green);
+    }
+
+    .tag-github {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent-blue);
+    }
+
+    .project-desc {
+      font-size: 0.92rem;
+      color: var(--text-sub);
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+
+    }
+
+    .project-category {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: auto;
+    }
+
+    .action-link {
+      flex: 1;
+      text-align: center;
+      padding: 0.6rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .link-live {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .link-live:hover {
+      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .link-github {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    .link-github:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-badge">🚀 GitHub & Vercel 통합 대시보드</div>
+    <h1>AHNHYUNGJIN 마스터 프로젝트 허브</h1>
+    <p>GitHub에 저장 및 Vercel로 라이브 배포된 모든 프로젝트, 애플리케이션, 체육 도구 및 AI 매뉴얼 통합 모음집</p>
+    
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">총 저장소</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="statLive">0</div>
+        <div class="stat-label">라이브 배포 앱</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">4</div>
+        <div class="stat-label">주요 카테고리</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls -->
+  <div class="controls-wrapper">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="프로젝트 이름, 설명 또는 키워드로 검색...">
+    </div>
+
+    <div class="filter-tabs" id="filterTabs">
+      <button class="tab-btn active" data-filter="all">전체 (All)</button>
+      <button class="tab-btn" data-filter="live">🚀 라이브 배포 앱</button>
+      <button class="tab-btn" data-filter="pe">🏀 체육 & 스포츠</button>
+      <button class="tab-btn" data-filter="guide">📚 AI & 개발 가이드</button>
+      <button class="tab-btn" data-filter="tool">🛠️ 툴 & 유틸리티</button>
+    </div>
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="projects-grid" id="projectsGrid"></div>
+
+  <footer>
+    <p>© 2026 AHNHYUNGJIN Master Portfolio Hub | Powered by GitHub & Vercel</p>
+  </footer>
+</div>
+
+<script>
+  const projects = [
+    {
+      name: "clasp-guide-site",
+      title: "Google Apps Script clasp 초보자 가이드",
+      desc: "Google Apps Script 전용 CLI 도구인 clasp 설치부터 구글 시트 연동, 소스코드 업로드 및 웹앱 자동 배포까지 초보자도 10분 만에 배우는 실전 매뉴얼",
+      category: "guide",
+      liveUrl: "https://clasp-guide-site.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/clasp-guide-site",
+      isLive: true
+    },
+    {
+      name: "pe-curriculum",
+      title: "체육 교육과정 관리 대시보드",
+      desc: "체육 수업 과목별 성취기준, 평가 기준 및 수업 계획을 효율적으로 시각화하고 관리하는 교육과정 대시보드 앱",
+      category: "pe",
+      liveUrl: "https://pe-curriculum-two.vercel.app",
+      githubUrl: "",
+      isLive: true
+    },
+    {
+      name: "video-drive-qr",
+      title: "비디오 구글 드라이브 업로드 & QR 생성기",
+      desc: "수업 중 촬영한 학생 실기 영상을 구글 드라이브로 즉시 전송하고 스마트폰으로 스캔할 수 있는 QR 코드를 자동 생성하는 시스템",
+      category: "tool",
+      liveUrl: "https://video-drive-qr.vercel.app",
+      githubUrl: "",
+      isLive: true
+    },
+    {
+      name: "motionanalysis4pe",
+      title: "체육 수업 동작 분석 & 비디오 딜레이",
+      desc: "웹캠을 활용하여 학생들의 운동 동작을 실시간 지연(Video Delay) 재생하고 자세를 프레임 단위로 분석하는 체육 피드백 프로그램",
+      category: "pe",
+      liveUrl: "https://motionanalyzer.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/motionanalysis4pe",
+      isLive: true
+    },
+    {
+      name: "video_qr_booth",
+      title: "비디오 QR 포토부스 시스템",
+      desc: "학교 행사 및 수업에서 영상을 녹화하고 출력물에 QR 코드를 포함시켜 바로 영상을 다운로드할 수 있는 웹 기반 포토부스",
+      category: "tool",
+      liveUrl: "https://videoqrbooth.vercel.app",
+      githubUrl: "",
+      isLive: true
+    },
+    {
+      name: "4cut4u_v2",
+      title: "인생네컷 셀프 포토 스튜디오 웹앱",
+      desc: "다양한 프레임 레이아웃과 필터를 제공하여 학교 축제 및 동아리 활동 시 셀프 4컷 사진을 촬영하고 출력하는 포토 앱",
+      category: "tool",
+      liveUrl: "https://4cut4uv2.vercel.app",
+      githubUrl: "",
+      isLive: true
+    },
+    {
+      name: "PICKLEBALL",
+      title: "피클볼 아카데미 & 경기 관리 앱",
+      desc: "피클볼(Pickleball) 규칙 안내, 코트 라인업 생성, 경기 점수 기록 및 대진표 관리 시스템",
+      category: "pe",
+      liveUrl: "https://pickleball-academy-v2.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/PICKLEBALL",
+      isLive: true
+    },
+    {
+      name: "badminton-academy",
+      title: "배드민턴 아카데미 대진표 매니저",
+      desc: "배드민턴 수업 및 동호회 경기 대진표 자동 편성 및 코트별 점수 관리 웹 프로그램",
+      category: "pe",
+      liveUrl: "https://badminton-academy-gules.vercel.app",
+      githubUrl: "",
+      isLive: true
+    },
+    {
+      name: "running-timer",
+      title: "육상 & 런닝 스톱워치 타임 트래커",
+      desc: "모바일 화면에 최적화된 라운드별 랩타임 측정 및 멀티 트랙 런닝 스톱워치 타이머",
+      category: "pe",
+      liveUrl: "https://running-timer-ashen.vercel.app",
+      githubUrl: "",
+      isLive: true
+    },
+    {
+      name: "kinball_score",
+      title: "킨볼(Kin-Ball) 3팀 경기 전광판",
+      desc: "킨볼 특유의 3팀(Pink, Grey, Black) 동시 참여 경기를 위한 전광판 및 특수 점수 집계 전용 웹앱",
+      category: "pe",
+      liveUrl: "https://kinballscore.vercel.app",
+      githubUrl: "",
+      isLive: true
+    },
+    {
+      name: "armotiongame6",
+      title: "AR 모션 인식 체육 아케이드 게임",
+      desc: "카메라 기반 웹 동작 인식을 통해 몸을 움직여 장애물을 피하고 점수를 획득하는 AR 체육 아케이드 게임",
+      category: "pe",
+      liveUrl: "https://motion-arcade-fawn.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/armotiongame6",
+      isLive: true
+    },
+    {
+      name: "pomodoro-sheet-app",
+      title: "Apple 스타일 구글시트 연동 포모도로 타이머",
+      desc: "Apple 스타일 인터페이스와 구글 스프레드시트 연동을 통해 개인 집중 시간과 공부/작업 통계를 자동 저장하는 포모도로 앱",
+      category: "tool",
+      liveUrl: "https://pomodoro-sheet-app.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/pomodoro-sheet-app",
+      isLive: true
+    },
+    {
+      name: "papsdatadb",
+      title: "PAPS (학생건강체력평가) 등급 조회 DB",
+      desc: "초·중·고 학생들의 PAPS 측정 항목(셔틀런, 악력, 굽히기 등) 기준별 등급을 즉시 검색하고 계산해주는 도구",
+      category: "pe",
+      liveUrl: "https://papsdatadb.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/papsdatadb",
+      isLive: true
+    },
+    {
+      name: "cone-knockout",
+      title: "콘 낙아웃 체육 서바이벌 게임",
+      desc: "체육 수업 시 팀별 콘 쓰러뜨리기 서바이벌 경기 규칙 및 타이머 웹앱",
+      category: "pe",
+      liveUrl: "https://cone-knockout.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/cone-knockout",
+      isLive: true
+    },
+    {
+      name: "jumprope",
+      title: "줄넘기 급수 및 횟수 기록 매니저",
+      desc: "학생별 음악 줄넘기 및 횟수 급수 기준 조회 및 기록 트래킹 도구",
+      category: "pe",
+      liveUrl: "https://jumprope-swart.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/jumprope",
+      isLive: true
+    },
+    {
+      name: "google-sites-html-deploy-manual",
+      title: "구글 사이트 도구 HTML 웹앱 배포 매뉴얼",
+      desc: "구글 사이트 도구(Google Sites)에 HTML5 및 자바스크립트 앱을 임베드하여 공개 배포하는 가이드",
+      category: "guide",
+      liveUrl: "https://google-sites-html-deploy-manual.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/google-sites-html-deploy-manual",
+      isLive: true
+    },
+    {
+      name: "aistudio-vercel-deploy-guide",
+      title: "AI Studio 앱 GitHub & Vercel 배포 가이드",
+      desc: "Google AI Studio에서 제작한 앱을 GitHub 저장소에 업로드하고 Vercel 호스팅으로 배포하는 실습 가이드",
+      category: "guide",
+      liveUrl: "",
+      githubUrl: "https://github.com/AHNHYUNGJIN/aistudio-vercel-deploy-guide",
+      isLive: false
+    },
+    {
+      name: "antigravity-guide",
+      title: "Google Antigravity 사용 및 설정 통합 가이드",
+      desc: "Antigravity CLI, slash 명령어, MCP, 사이드카 및 규칙 가이드 모음",
+      category: "guide",
+      liveUrl: "https://antigravity-guide-iota.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/antigravity-guide",
+      isLive: true
+    },
+    {
+      name: "ms-file-convert-to-googleworkspace-file",
+      title: "MS 오피스 ➡️ Google Workspace 자동 변환 매뉴얼",
+      desc: "MS Word, Excel, PowerPoint 파일들을 구글 문서, 스프레드시트, 프레젠테이션으로 자동 변환하는 매뉴얼",
+      category: "guide",
+      liveUrl: "https://ms-file-convert-to-googleworkspace.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/ms-file-convert-to-googleworkspace-file",
+      isLive: true
+    },
+    {
+      name: "pe-claude-guide",
+      title: "체육 교사를 위한 Claude AI 활용 가이드",
+      desc: "체육 지도안 작성, 평가지 제작, 동아리 활동 기획 시 Claude AI 모델을 효과적으로 사용하는 프로프팅 가이드",
+      category: "guide",
+      liveUrl: "https://pe-claude-guide.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/pe-claude-guide",
+      isLive: true
+    },
+    {
+      name: "YUTNORI",
+      title: "민속놀이 디지털 윷놀이 웹앱",
+      desc: "말판 이동 및 윷 던지기 확률 모듈이 포함된 디지털 민속 윷놀이 앱",
+      category: "tool",
+      liveUrl: "https://yutnori-app.vercel.app",
+      githubUrl: "https://github.com/AHNHYUNGJIN/YUTNORI",
+      isLive: true
+    },
+    {
+      name: "MY-DEVELOPMENT-JOURNEY",
+      title: "마스터 개발 여정 & 포트폴리오 대시보드",
+      desc: "전체 프로젝트 및 학습 여정을 관리하는 포트폴리오 대시보드 프로젝트",
+      category: "tool",
+      liveUrl: "",
+      githubUrl: "https://github.com/AHNHYUNGJIN/MY-DEVELOPMENT-JOURNEY",
+      isLive: false
+    },
+    {
+      name: "school-poster-prompt-gallery",
+      title: "학교 행사 포스터 AI 프롬프트 갤러리",
+      desc: "체육대회, 축제 등 학교 행사에 필요한 생성형 AI 포스터 이미지 및 프롬프트 모음 갤러리",
+      category: "guide",
+      liveUrl: "",
+      githubUrl: "https://github.com/AHNHYUNGJIN/school-poster-prompt-gallery",
+      isLive: false
+    },
+    {
+      name: "scoreboard-all",
+      title: "체육 및 경기용 통합 디지털 전광판",
+      desc: "농구, 축구, 배구 등 다양한 종목의 경기 점수 및 타이머를 표시하는 전광판",
+      category: "pe",
+      liveUrl: "",
+      githubUrl: "https://github.com/AHNHYUNGJIN/scoreboard-all",
+      isLive: false
+    },
+    {
+      name: "stacktimer",
+      title: "모바일 스포츠 스태킹 타이머",
+      desc: "스포츠 스태킹(컵 스태킹) 랩타임 측정 전용 모바일 터치 스톱워치",
+      category: "pe",
+      liveUrl: "",
+      githubUrl: "https://github.com/AHNHYUNGJIN/stacktimer",
+      isLive: false
+    },
+    {
+      name: "cbi-question-maker",
+      title: "개념 기반 탐구 수업 (CBI) 질문 생성기",
+      desc: "체육 및 각 교과 수업을 위한 개념적 탐구 질문을 자동 구성해주는 교사 지원 도구",
+      category: "guide",
+      liveUrl: "",
+      githubUrl: "https://github.com/AHNHYUNGJIN/cbi-question-maker",
+      isLive: false
+    },
+    {
+      name: "HEALTHY-PPT",
+      title: "건강 & 체력 과학적 원리 HTML PPT",
+      desc: "건강의 개념, 체력 요소, 운동 수행의 과학적 원리, FITT를 다루는 프리젠테이션 슬라이드",
+      category: "pe",
+      liveUrl: "",
+      githubUrl: "https://github.com/AHNHYUNGJIN/HEALTHY-PPT",
+      isLive: false
+    }
+  ];
+
+  function renderProjects(filter = 'all', query = '') {
+    const grid = document.getElementById('projectsGrid');
+    const filtered = projects.filter(p => {
+      const matchesFilter = 
+        filter === 'all' ? true :
+        filter === 'live' ? p.isLive :
+        p.category === filter;
+      
+      const searchStr = `${p.name} ${p.title} ${p.desc}`.toLowerCase();
+      const matchesQuery = query === '' || searchStr.includes(query.toLowerCase());
+
+      return matchesFilter && matchesQuery;
+    });
+
+    // Update Stats
+    document.getElementById('statTotal').innerText = projects.length;
+    document.getElementById('statLive').innerText = projects.filter(p => p.isLive).length;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-state">검색 결과가 없습니다. 다른 키워드로 검색해보세요.</div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(p => `
+      <div class="project-card">
+        <div>
+          <div class="project-card-header">
+            <h3 class="project-title">${p.title}</h3>
+            ${p.isLive ? '<span class="tag-badge tag-live">🚀 Live</span>' : '<span class="tag-badge tag-github">⭐ Repo</span>'}
+          </div>
+          <span class="project-category">${getCategoryName(p.category)}</span>
+          <p class="project-desc">${p.desc}</p>
+        </div>
+        <div class="project-actions">
+          ${p.isLive && p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" class="action-link link-live">🌐 웹앱 접속</a>` : ''}
+          ${p.githubUrl ? `<a href="${p.githubUrl}" target="_blank" class="action-link link-github">🐙 GitHub</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function getCategoryName(cat) {
+    switch(cat) {
+      case 'pe': return '🏀 체육 & 스포츠';
+      case 'guide': return '📚 AI & 개발 가이드';
+      case 'tool': return '🛠️ 툴 & 유틸리티';
+      default: return '📁 일반';
+    }
+  }
+
+  // Event Listeners
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    const activeFilter = document.querySelector('.tab-btn.active').dataset.filter;
+    renderProjects(activeFilter, e.target.value.trim());
+  });
+
+  document.getElementById('filterTabs').addEventListener('click', (e) => {
+    if (e.target.classList.contains('tab-btn')) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      const query = document.getElementById('searchInput').value.trim();
+      renderProjects(e.target.dataset.filter, query);
+    }
+  });
+
+  // Initial Render
+  renderProjects();
+</script>
+
+</body>
+</html>
