@@ -389,247 +389,714 @@
 <script>
   const projects = [
     {
-      name: "clasp-guide-site",
-      title: "Google Apps Script clasp 초보자 가이드",
-      desc: "Google Apps Script 전용 CLI 도구인 clasp 설치부터 구글 시트 연동, 소스코드 업로드 및 웹앱 자동 배포까지 초보자도 10분 만에 배우는 실전 매뉴얼",
-      category: "guide",
-      liveUrl: "https://clasp-guide-site.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/clasp-guide-site",
-      isLive: true
+      "name": "teacher-training-curriculum",
+      "title": "교사 AI·웹 연수 통합 허브",
+      "desc": "AI·웹 도구 연수 자료 6종을 하나로 묶는 허브와 통합 커리큘럼(6레벨·62차시)",
+      "category": "guide",
+      "liveUrl": "https://teacher-training-curriculum.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/teacher-training-curriculum",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "pe-curriculum",
-      title: "체육 교육과정 관리 대시보드",
-      desc: "체육 수업 과목별 성취기준, 평가 기준 및 수업 계획을 효율적으로 시각화하고 관리하는 교육과정 대시보드 앱",
-      category: "pe",
-      liveUrl: "https://pe-curriculum-two.vercel.app",
-      githubUrl: "",
-      isLive: true
+      "name": "claude-teacher-training",
+      "title": "Claude 교사 연수 자료",
+      "desc": "슬라이드 27장 + 실습 가이드 22챕터로 구성된 Claude 활용 교사 연수 세트",
+      "category": "guide",
+      "liveUrl": "https://claude-teacher-training.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/claude-teacher-training",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "video-drive-qr",
-      title: "비디오 구글 드라이브 업로드 & QR 생성기",
-      desc: "수업 중 촬영한 학생 실기 영상을 구글 드라이브로 즉시 전송하고 스마트폰으로 스캔할 수 있는 QR 코드를 자동 생성하는 시스템",
-      category: "tool",
-      liveUrl: "https://video-drive-qr.vercel.app",
-      githubUrl: "",
-      isLive: true
+      "name": "gemini-learning-materials",
+      "title": "Gemini 학습 세트",
+      "desc": "교사·교직원을 위한 Gemini 슬라이드 매뉴얼 + 실습 가이드",
+      "category": "guide",
+      "liveUrl": "https://gemini-learning-materials.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/gemini-learning-materials",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "motionanalysis4pe",
-      title: "체육 수업 동작 분석 & 비디오 딜레이",
-      desc: "웹캠을 활용하여 학생들의 운동 동작을 실시간 지연(Video Delay) 재생하고 자세를 프레임 단위로 분석하는 체육 피드백 프로그램",
-      category: "pe",
-      liveUrl: "https://motionanalyzer.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/motionanalysis4pe",
-      isLive: true
+      "name": "gemini-notebook-guide",
+      "title": "Gemini Notebook 학습 패키지",
+      "desc": "Gemini Notebook(구 NotebookLM) 교사용 한국어 슬라이드 매뉴얼 + 실습 가이드",
+      "category": "guide",
+      "liveUrl": "https://gemini-notebook-vert.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/gemini-notebook-guide",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "video_qr_booth",
-      title: "비디오 QR 포토부스 시스템",
-      desc: "학교 행사 및 수업에서 영상을 녹화하고 출력물에 QR 코드를 포함시켜 바로 영상을 다운로드할 수 있는 웹 기반 포토부스",
-      category: "tool",
-      liveUrl: "https://videoqrbooth.vercel.app",
-      githubUrl: "",
-      isLive: true
+      "name": "github-study",
+      "title": "깃허브 사용법 학습 웹앱",
+      "desc": "교사·비개발자를 위한 깃허브 자기주도 학습 웹앱(24차시 학습장)",
+      "category": "guide",
+      "liveUrl": "https://github-study.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/github-study",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "4cut4u_v2",
-      title: "인생네컷 셀프 포토 스튜디오 웹앱",
-      desc: "다양한 프레임 레이아웃과 필터를 제공하여 학교 축제 및 동아리 활동 시 셀프 4컷 사진을 촬영하고 출력하는 포토 앱",
-      category: "tool",
-      liveUrl: "https://4cut4uv2.vercel.app",
-      githubUrl: "",
-      isLive: true
+      "name": "vercel-usage-guide",
+      "title": "Vercel 사용법 연수",
+      "desc": "Vercel 배포 입문 슬라이드 매뉴얼 + 실습 가이드",
+      "category": "guide",
+      "liveUrl": "https://vercel-usage-guide.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/vercel-usage-guide",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "PICKLEBALL",
-      title: "피클볼 아카데미 & 경기 관리 앱",
-      desc: "피클볼(Pickleball) 규칙 안내, 코트 라인업 생성, 경기 점수 기록 및 대진표 관리 시스템",
-      category: "pe",
-      liveUrl: "https://pickleball-academy-v2.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/PICKLEBALL",
-      isLive: true
+      "name": "netlify-usage-guide",
+      "title": "Netlify 사용법 연수",
+      "desc": "Netlify 배포 입문 슬라이드 매뉴얼 + 실습 가이드",
+      "category": "guide",
+      "liveUrl": "https://netlify-usage-guide.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/netlify-usage-guide",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "badminton-academy",
-      title: "배드민턴 아카데미 대진표 매니저",
-      desc: "배드민턴 수업 및 동호회 경기 대진표 자동 편성 및 코트별 점수 관리 웹 프로그램",
-      category: "pe",
-      liveUrl: "https://badminton-academy-gules.vercel.app",
-      githubUrl: "",
-      isLive: true
+      "name": "netlify-usage-prd",
+      "title": "Netlify 연수 PRD",
+      "desc": "Netlify 연수 자료 기획(PRD) 문서 사이트",
+      "category": "guide",
+      "liveUrl": "https://netlify-usage-prd.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/netlify-usage-prd",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "running-timer",
-      title: "육상 & 런닝 스톱워치 타임 트래커",
-      desc: "모바일 화면에 최적화된 라운드별 랩타임 측정 및 멀티 트랙 런닝 스톱워치 타이머",
-      category: "pe",
-      liveUrl: "https://running-timer-ashen.vercel.app",
-      githubUrl: "",
-      isLive: true
+      "name": "nunait-60h-study",
+      "title": "IT 연수 학습 웹앱(60차시)",
+      "desc": "IT 활용 연수 60차시 자기주도 학습 웹앱 + AI 프롬프트 갤러리",
+      "category": "guide",
+      "liveUrl": "https://nunait-60h-study.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/nunait-60h-study",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "kinball_score",
-      title: "킨볼(Kin-Ball) 3팀 경기 전광판",
-      desc: "킨볼 특유의 3팀(Pink, Grey, Black) 동시 참여 경기를 위한 전광판 및 특수 점수 집계 전용 웹앱",
-      category: "pe",
-      liveUrl: "https://kinballscore.vercel.app",
-      githubUrl: "",
-      isLive: true
+      "name": "andong-sports-training",
+      "title": "안동 스포츠강사 연수",
+      "desc": "안동교육지원청 2026학년도 스포츠강사 연수 — 쉽고 즐거운 신체활동",
+      "category": "guide",
+      "liveUrl": "https://andong-sports-training.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/andong-sports-training",
+      "isLive": true,
+      "isPrivate": false
     },
     {
-      name: "armotiongame6",
-      title: "AR 모션 인식 체육 아케이드 게임",
-      desc: "카메라 기반 웹 동작 인식을 통해 몸을 움직여 장애물을 피하고 점수를 획득하는 AR 체육 아케이드 게임",
-      category: "pe",
-      liveUrl: "https://motion-arcade-fawn.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/armotiongame6",
-      isLive: true
+      "name": "clasp-guide-site",
+      "title": "Google Apps Script clasp 초보자 가이드",
+      "desc": "clasp 설치부터 구글 시트 연동, 소스코드 업로드 및 웹앱 자동 배포까지 배우는 실전 매뉴얼",
+      "category": "guide",
+      "liveUrl": "https://clasp-guide-site.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/clasp-guide-site",
+      "isLive": true,
+      "isPrivate": false
     },
     {
-      name: "pomodoro-sheet-app",
-      title: "Apple 스타일 구글시트 연동 포모도로 타이머",
-      desc: "Apple 스타일 인터페이스와 구글 스프레드시트 연동을 통해 개인 집중 시간과 공부/작업 통계를 자동 저장하는 포모도로 앱",
-      category: "tool",
-      liveUrl: "https://pomodoro-sheet-app.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/pomodoro-sheet-app",
-      isLive: true
+      "name": "google-sites-html-deploy-manual",
+      "title": "구글 사이트 도구 HTML 웹앱 배포 매뉴얼",
+      "desc": "구글 사이트 도구(Google Sites)에 HTML5 및 자바스크립트 앱을 임베드하여 공개 배포하는 가이드",
+      "category": "guide",
+      "liveUrl": "https://google-sites-html-deploy-manual.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/google-sites-html-deploy-manual",
+      "isLive": true,
+      "isPrivate": false
     },
     {
-      name: "papsdatadb",
-      title: "PAPS (학생건강체력평가) 등급 조회 DB",
-      desc: "초·중·고 학생들의 PAPS 측정 항목(셔틀런, 악력, 굽히기 등) 기준별 등급을 즉시 검색하고 계산해주는 도구",
-      category: "pe",
-      liveUrl: "https://papsdatadb.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/papsdatadb",
-      isLive: true
+      "name": "aistudio-vercel-deploy-guide",
+      "title": "AI Studio 앱 GitHub & Vercel 배포 가이드",
+      "desc": "Google AI Studio에서 제작한 앱을 GitHub 저장소에 업로드하고 Vercel 호스팅으로 배포하는 실습 가이드",
+      "category": "guide",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/aistudio-vercel-deploy-guide",
+      "isLive": false,
+      "isPrivate": false
     },
     {
-      name: "cone-knockout",
-      title: "콘 낙아웃 체육 서바이벌 게임",
-      desc: "체육 수업 시 팀별 콘 쓰러뜨리기 서바이벌 경기 규칙 및 타이머 웹앱",
-      category: "pe",
-      liveUrl: "https://cone-knockout.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/cone-knockout",
-      isLive: true
+      "name": "antigravity-guide",
+      "title": "Google Antigravity 사용 및 설정 통합 가이드",
+      "desc": "Antigravity CLI, slash 명령어, MCP, 사이드카 및 규칙 가이드 모음",
+      "category": "guide",
+      "liveUrl": "https://antigravity-guide-iota.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/antigravity-guide",
+      "isLive": true,
+      "isPrivate": false
     },
     {
-      name: "jumprope",
-      title: "줄넘기 급수 및 횟수 기록 매니저",
-      desc: "학생별 음악 줄넘기 및 횟수 급수 기준 조회 및 기록 트래킹 도구",
-      category: "pe",
-      liveUrl: "https://jumprope-swart.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/jumprope",
-      isLive: true
+      "name": "ms-file-convert-to-googleworkspace-file",
+      "title": "MS 오피스 → Google Workspace 자동 변환 매뉴얼",
+      "desc": "MS Word, Excel, PowerPoint 파일들을 구글 문서, 스프레드시트, 프레젠테이션으로 자동 변환하는 매뉴얼",
+      "category": "guide",
+      "liveUrl": "https://ms-file-convert-to-googleworkspace.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/ms-file-convert-to-googleworkspace-file",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "google-sites-html-deploy-manual",
-      title: "구글 사이트 도구 HTML 웹앱 배포 매뉴얼",
-      desc: "구글 사이트 도구(Google Sites)에 HTML5 및 자바스크립트 앱을 임베드하여 공개 배포하는 가이드",
-      category: "guide",
-      liveUrl: "https://google-sites-html-deploy-manual.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/google-sites-html-deploy-manual",
-      isLive: true
+      "name": "pe-claude-guide",
+      "title": "체육 교사를 위한 Claude AI 활용 가이드",
+      "desc": "체육 지도안 작성, 평가지 제작, 동아리 활동 기획 시 Claude AI를 효과적으로 사용하는 프롬프팅 가이드",
+      "category": "guide",
+      "liveUrl": "https://pe-claude-guide.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/pe-claude-guide",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "aistudio-vercel-deploy-guide",
-      title: "AI Studio 앱 GitHub & Vercel 배포 가이드",
-      desc: "Google AI Studio에서 제작한 앱을 GitHub 저장소에 업로드하고 Vercel 호스팅으로 배포하는 실습 가이드",
-      category: "guide",
-      liveUrl: "",
-      githubUrl: "https://github.com/AHNHYUNGJIN/aistudio-vercel-deploy-guide",
-      isLive: false
+      "name": "vibe-coding-edu-portal",
+      "title": "바이브코딩 교육 포털",
+      "desc": "바이브코딩 수업·연수용 교육 포털 사이트",
+      "category": "guide",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/vibe-coding-edu-portal",
+      "isLive": false,
+      "isPrivate": false
     },
     {
-      name: "antigravity-guide",
-      title: "Google Antigravity 사용 및 설정 통합 가이드",
-      desc: "Antigravity CLI, slash 명령어, MCP, 사이드카 및 규칙 가이드 모음",
-      category: "guide",
-      liveUrl: "https://antigravity-guide-iota.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/antigravity-guide",
-      isLive: true
+      "name": "vibe-coding-glossary",
+      "title": "바이브코딩 용어집",
+      "desc": "바이브코딩·AI 개발 용어를 정리한 용어집",
+      "category": "guide",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/vibe-coding-glossary",
+      "isLive": false,
+      "isPrivate": false
     },
     {
-      name: "ms-file-convert-to-googleworkspace-file",
-      title: "MS 오피스 ➡️ Google Workspace 자동 변환 매뉴얼",
-      desc: "MS Word, Excel, PowerPoint 파일들을 구글 문서, 스프레드시트, 프레젠테이션으로 자동 변환하는 매뉴얼",
-      category: "guide",
-      liveUrl: "https://ms-file-convert-to-googleworkspace.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/ms-file-convert-to-googleworkspace-file",
-      isLive: true
+      "name": "cbi-question-maker",
+      "title": "개념 기반 탐구 수업(CBI) 질문 생성기",
+      "desc": "체육 및 각 교과 수업을 위한 개념적 탐구 질문을 자동 구성해주는 교사 지원 도구",
+      "category": "guide",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/cbi-question-maker",
+      "isLive": false,
+      "isPrivate": false
     },
     {
-      name: "pe-claude-guide",
-      title: "체육 교사를 위한 Claude AI 활용 가이드",
-      desc: "체육 지도안 작성, 평가지 제작, 동아리 활동 기획 시 Claude AI 모델을 효과적으로 사용하는 프로프팅 가이드",
-      category: "guide",
-      liveUrl: "https://pe-claude-guide.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/pe-claude-guide",
-      isLive: true
+      "name": "summer-safety-2026",
+      "title": "2026 여름철 안전교육 자료",
+      "desc": "여름철 물놀이·폭염 등 안전교육 안내 자료",
+      "category": "guide",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/summer-safety-2026",
+      "isLive": false,
+      "isPrivate": false
     },
     {
-      name: "YUTNORI",
-      title: "민속놀이 디지털 윷놀이 웹앱",
-      desc: "말판 이동 및 윷 던지기 확률 모듈이 포함된 디지털 민속 윷놀이 앱",
-      category: "tool",
-      liveUrl: "https://yutnori-app.vercel.app",
-      githubUrl: "https://github.com/AHNHYUNGJIN/YUTNORI",
-      isLive: true
+      "name": "rungate",
+      "title": "RunGate 모션 달리기 타이머",
+      "desc": "좌우 게이트/중앙 라인/감지 존 3모드 모션 인식 달리기 기록 타이머 — 학생 기록·CSV 내보내기 지원",
+      "category": "pe",
+      "liveUrl": "https://rungate.netlify.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/rungate",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "MY-DEVELOPMENT-JOURNEY",
-      title: "마스터 개발 여정 & 포트폴리오 대시보드",
-      desc: "전체 프로젝트 및 학습 여정을 관리하는 포트폴리오 대시보드 프로젝트",
-      category: "tool",
-      liveUrl: "",
-      githubUrl: "https://github.com/AHNHYUNGJIN/MY-DEVELOPMENT-JOURNEY",
-      isLive: false
+      "name": "motion-timer",
+      "title": "모션 셔틀런 타이머(구버전)",
+      "desc": "감지 횟수 기반 셔틀런 타이머 — RunGate의 전신(보존용)",
+      "category": "pe",
+      "liveUrl": "https://motion-timer.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/motion-timer",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "school-poster-prompt-gallery",
-      title: "학교 행사 포스터 AI 프롬프트 갤러리",
-      desc: "체육대회, 축제 등 학교 행사에 필요한 생성형 AI 포스터 이미지 및 프롬프트 모음 갤러리",
-      category: "guide",
-      liveUrl: "",
-      githubUrl: "https://github.com/AHNHYUNGJIN/school-poster-prompt-gallery",
-      isLive: false
+      "name": "running-timer",
+      "title": "육상 & 런닝 스톱워치 타임 트래커",
+      "desc": "모바일 화면에 최적화된 라운드별 랩타임 측정 및 멀티 트랙 런닝 스톱워치 타이머",
+      "category": "pe",
+      "liveUrl": "https://running-timer-ashen.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/running-timer",
+      "isLive": true,
+      "isPrivate": true
     },
     {
-      name: "scoreboard-all",
-      title: "체육 및 경기용 통합 디지털 전광판",
-      desc: "농구, 축구, 배구 등 다양한 종목의 경기 점수 및 타이머를 표시하는 전광판",
-      category: "pe",
-      liveUrl: "",
-      githubUrl: "https://github.com/AHNHYUNGJIN/scoreboard-all",
-      isLive: false
+      "name": "run-motion-timer",
+      "title": "런 모션 타이머(초기 버전)",
+      "desc": "모션 인식 달리기 타이머 초기 실험 버전",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/run-motion-timer",
+      "isLive": false,
+      "isPrivate": false
     },
     {
-      name: "stacktimer",
-      title: "모바일 스포츠 스태킹 타이머",
-      desc: "스포츠 스태킹(컵 스태킹) 랩타임 측정 전용 모바일 터치 스톱워치",
-      category: "pe",
-      liveUrl: "",
-      githubUrl: "https://github.com/AHNHYUNGJIN/stacktimer",
-      isLive: false
+      "name": "motion-arcade",
+      "title": "모션 인식 아케이드 게임",
+      "desc": "TensorFlow.js MoveNet 기반 신체 동작 인식 체육 아케이드 게임",
+      "category": "pe",
+      "liveUrl": "https://motion-arcade-fawn.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/motion-arcade",
+      "isLive": true,
+      "isPrivate": false
     },
     {
-      name: "cbi-question-maker",
-      title: "개념 기반 탐구 수업 (CBI) 질문 생성기",
-      desc: "체육 및 각 교과 수업을 위한 개념적 탐구 질문을 자동 구성해주는 교사 지원 도구",
-      category: "guide",
-      liveUrl: "",
-      githubUrl: "https://github.com/AHNHYUNGJIN/cbi-question-maker",
-      isLive: false
+      "name": "armotiongame6",
+      "title": "AR 모션 게임 6",
+      "desc": "카메라 기반 웹 동작 인식으로 몸을 움직여 즐기는 AR 체육 게임",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/armotiongame6",
+      "isLive": false,
+      "isPrivate": false
     },
     {
-      name: "HEALTHY-PPT",
-      title: "건강 & 체력 과학적 원리 HTML PPT",
-      desc: "건강의 개념, 체력 요소, 운동 수행의 과학적 원리, FITT를 다루는 프리젠테이션 슬라이드",
-      category: "pe",
-      liveUrl: "",
-      githubUrl: "https://github.com/AHNHYUNGJIN/HEALTHY-PPT",
-      isLive: false
+      "name": "motionanalysis4pe",
+      "title": "체육 수업 동작 분석 & 비디오 딜레이",
+      "desc": "웹캠으로 학생들의 운동 동작을 실시간 지연(Video Delay) 재생하고 자세를 프레임 단위로 분석하는 피드백 프로그램",
+      "category": "pe",
+      "liveUrl": "https://motionanalyzer.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/motionanalysis4pe",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "finger-timer-clone",
+      "title": "핑거 타이머",
+      "desc": "손가락 터치 기반 순발력 타이머 앱",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/finger-timer-clone",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "stacktimer",
+      "title": "모바일 스포츠 스태킹 타이머",
+      "desc": "스포츠 스태킹(컵 스태킹) 랩타임 측정 전용 모바일 터치 스톱워치",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/stacktimer",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "tennis-speed",
+      "title": "테니스 스피드 측정",
+      "desc": "테니스 스윙·서브 속도 측정 웹앱",
+      "category": "pe",
+      "liveUrl": "https://tennis-speed.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/tennis-speed",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "soccer-speed",
+      "title": "축구 스피드 측정",
+      "desc": "축구 킥 속도 측정 웹앱",
+      "category": "pe",
+      "liveUrl": "https://soccer-speed.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/soccer-speed",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "cone-knockout",
+      "title": "콘 낙아웃 체육 서바이벌 게임",
+      "desc": "체육 수업 시 팀별 콘 쓰러뜨리기 서바이벌 경기 규칙 및 타이머 웹앱",
+      "category": "pe",
+      "liveUrl": "https://cone-knockout.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/cone-knockout",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "jumprope",
+      "title": "줄넘기 급수 및 횟수 기록 매니저",
+      "desc": "학생별 음악 줄넘기 및 횟수 급수 기준 조회 및 기록 트래킹 도구",
+      "category": "pe",
+      "liveUrl": "https://jumprope-swart.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/jumprope",
+      "isLive": true,
+      "isPrivate": true
+    },
+    {
+      "name": "kinball_score",
+      "title": "킨볼(Kin-Ball) 3팀 경기 전광판",
+      "desc": "킨볼 특유의 3팀(Pink, Grey, Black) 동시 참여 경기를 위한 전광판 및 특수 점수 집계 전용 웹앱",
+      "category": "pe",
+      "liveUrl": "https://kinballscore.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/kinball_score",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "scoreboard-all",
+      "title": "체육 및 경기용 통합 디지털 전광판",
+      "desc": "농구, 축구, 배구 등 다양한 종목의 경기 점수 및 타이머를 표시하는 전광판",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/scoreboard-all",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "rhythm",
+      "title": "리듬 트레이닝 앱",
+      "desc": "리듬·박자 연습용 웹앱",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/rhythm",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "YUTNORI",
+      "title": "민속놀이 디지털 윷놀이 웹앱",
+      "desc": "말판 이동 및 윷 던지기 확률 모듈이 포함된 디지털 민속 윷놀이 앱",
+      "category": "tool",
+      "liveUrl": "https://yutnori-app.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/YUTNORI",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "2026nakunsportsvolleyball",
+      "title": "2026 나쿤 스포츠배구",
+      "desc": "스포츠배구 경기 운영 웹 자료",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/2026nakunsportsvolleyball",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "team-builder",
+      "title": "팀뽑기 — 학생 팀 편성 도구",
+      "desc": "같은 팀/다른 팀 제약과 균형을 지키는 학생 팀 자동 편성 도구 — 구글시트 복사·붙여넣기 지원 (GitHub 저장소 미등록, 로컬 보관)",
+      "category": "pe",
+      "liveUrl": "https://teamppopgi.netlify.app",
+      "githubUrl": "",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "pe-curriculum",
+      "title": "체육 교육과정 관리 대시보드",
+      "desc": "체육 수업 과목별 성취기준, 평가 기준 및 수업 계획을 효율적으로 시각화하고 관리하는 교육과정 대시보드 앱",
+      "category": "pe",
+      "liveUrl": "https://pe-curriculum-two.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/pe-curriculum",
+      "isLive": true,
+      "isPrivate": true
+    },
+    {
+      "name": "pe-plan-generator",
+      "title": "체육 지도안 생성기",
+      "desc": "체육 수업 지도안 자동 생성 도구",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/pe-plan-generator",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "papsdatadb",
+      "title": "PAPS(학생건강체력평가) 등급 조회 DB",
+      "desc": "초·중·고 학생들의 PAPS 측정 항목 기준별 등급을 즉시 검색하고 계산해주는 도구",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/papsdatadb",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "PAPS-GRADE-SEARCH",
+      "title": "PAPS 등급 검색(구버전)",
+      "desc": "팝스 등급을 검색해주는 도구 초기 버전",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/PAPS-GRADE-SEARCH",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "papscoach-buddy",
+      "title": "팝스 코치 버디",
+      "desc": "PAPS 측정·지도 도우미",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/papscoach-buddy",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "pickleball-academy",
+      "title": "피클볼 아카데미",
+      "desc": "피클볼 수업·아카데미 운영 웹앱",
+      "category": "pe",
+      "liveUrl": "https://pickleball-academy-kappa.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/pickleball-academy",
+      "isLive": true,
+      "isPrivate": true
+    },
+    {
+      "name": "pickleball-academy-v2",
+      "title": "피클볼 아카데미 v2",
+      "desc": "피클볼 규칙 안내, 코트 라인업 생성, 경기 점수 기록 및 대진표 관리 시스템 v2",
+      "category": "pe",
+      "liveUrl": "https://pickleball-academy-v2.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/pickleball-academy-v2",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "PICKLEBALL",
+      "title": "피클볼(초기 버전)",
+      "desc": "피클볼 규칙·경기 관리 초기 버전",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/PICKLEBALL",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "badminton-academy",
+      "title": "배드민턴 아카데미 대진표 매니저",
+      "desc": "배드민턴 수업 및 동호회 경기 대진표 자동 편성 및 코트별 점수 관리 웹 프로그램",
+      "category": "pe",
+      "liveUrl": "https://badminton-academy-gules.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/badminton-academy",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "sports-rules-mcp",
+      "title": "스포츠 규칙 검색 MCP 서버",
+      "desc": "체육 수업용 스포츠 규칙 검색 MCP 서버",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/sports-rules-mcp",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "HEALTHY-PPT",
+      "title": "건강 & 체력 과학적 원리 HTML PPT",
+      "desc": "건강의 개념, 체력 요소, 운동 수행의 과학적 원리, FITT를 다루는 프레젠테이션 슬라이드",
+      "category": "pe",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/HEALTHY-PPT",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "schoolpromise",
+      "title": "학교 약속",
+      "desc": "학교생활 약속(규칙) 안내 웹",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/schoolpromise",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "-",
+      "title": "세특 작성 도우미",
+      "desc": "세부능력 및 특기사항 작성을 돕는 도구",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/-",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "vice-principal-2026",
+      "title": "교감 업무 2026",
+      "desc": "2026학년도 교감 업무 관련 자료",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/vice-principal-2026",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "sports-edu-videos",
+      "title": "종목별 스포츠 교육 영상관",
+      "desc": "YouTube API 배치 수집 기반 25종목 5,160개 교육 영상 큐레이션 — 매일 새벽 자동 갱신",
+      "category": "pe",
+      "liveUrl": "https://sports-edu-videos.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/sports-edu-videos",
+      "isLive": true,
+      "isPrivate": true
+    },
+    {
+      "name": "video-drive-qr",
+      "title": "비디오 구글 드라이브 업로드 & QR 생성기",
+      "desc": "수업 중 촬영한 학생 실기 영상을 구글 드라이브로 즉시 전송하고 스마트폰으로 스캔할 수 있는 QR 코드를 자동 생성하는 시스템",
+      "category": "tool",
+      "liveUrl": "https://video-drive-qr.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/video-drive-qr",
+      "isLive": true,
+      "isPrivate": true
+    },
+    {
+      "name": "video_qr_booth",
+      "title": "비디오 QR 포토부스 시스템",
+      "desc": "학교 행사 및 수업에서 영상을 녹화하고 출력물에 QR 코드를 포함시켜 바로 영상을 다운로드할 수 있는 웹 기반 포토부스",
+      "category": "tool",
+      "liveUrl": "https://videoqrbooth.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/video_qr_booth",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "4cut4u_v2",
+      "title": "인생네컷 셀프 포토 스튜디오 웹앱",
+      "desc": "다양한 프레임 레이아웃과 필터를 제공하여 학교 축제 및 동아리 활동 시 셀프 4컷 사진을 촬영하고 출력하는 포토 앱",
+      "category": "tool",
+      "liveUrl": "https://4cut4uv2.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/4cut4u_v2",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "youtube-summarizer",
+      "title": "유튜브 요약기",
+      "desc": "유튜브 영상 자막 기반 요약 도구",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/youtube-summarizer",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "school-poster-prompt-gallery",
+      "title": "학교 행사 포스터 AI 프롬프트 갤러리",
+      "desc": "체육대회, 축제 등 학교 행사에 필요한 생성형 AI 포스터 이미지 및 프롬프트 모음 갤러리",
+      "category": "guide",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/school-poster-prompt-gallery",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "poster-gallery",
+      "title": "포스터 갤러리",
+      "desc": "AI 생성 포스터 이미지 갤러리",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/poster-gallery",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "hand-drawing",
+      "title": "핸드 드로잉",
+      "desc": "손 그림 그리기 웹앱",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/hand-drawing",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "likepadlet",
+      "title": "라이크패들렛",
+      "desc": "패들렛 스타일 공유 게시판 웹앱",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/likepadlet",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "pomodoro-sheet-app",
+      "title": "Apple 스타일 구글시트 연동 포모도로 타이머",
+      "desc": "Apple 스타일 인터페이스와 구글 스프레드시트 연동으로 개인 집중 시간과 공부/작업 통계를 자동 저장하는 포모도로 앱",
+      "category": "tool",
+      "liveUrl": "https://pomodoro-sheet-app.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/pomodoro-sheet-app",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "capture4me",
+      "title": "화면 캡처 프로그램",
+      "desc": "화면 캡처 유틸리티",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/capture4me",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "particle-extension",
+      "title": "파티클 확장",
+      "desc": "파티클 효과 브라우저 확장/데모",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/particle-extension",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "petal-pdf-craft",
+      "title": "PDF 크래프트",
+      "desc": "PDF 편집·가공 도구",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/petal-pdf-craft",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "excel-convert-to-spreadsheets",
+      "title": "엑셀 → 구글 시트 변환",
+      "desc": "엑셀 파일을 구글 스프레드시트로 변환하는 도구",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/excel-convert-to-spreadsheets",
+      "isLive": false,
+      "isPrivate": false
+    },
+    {
+      "name": "emotionequilibrium",
+      "title": "감정 균형",
+      "desc": "감정 기록·균형 관리 앱",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/emotionequilibrium",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "MY-DEVELOPMENT-JOURNEY",
+      "title": "마스터 개발 여정 & 포트폴리오 대시보드",
+      "desc": "전체 프로젝트 및 학습 여정을 관리하는 포트폴리오 대시보드 프로젝트",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/MY-DEVELOPMENT-JOURNEY",
+      "isLive": false,
+      "isPrivate": true
+    },
+    {
+      "name": "github-all-projects-hub",
+      "title": "마스터 프로젝트 허브(이 사이트)",
+      "desc": "모든 프로젝트를 검색·카테고리 필터로 모아보는 통합 포트폴리오 대시보드",
+      "category": "tool",
+      "liveUrl": "https://github-all-projects-hub.vercel.app",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/github-all-projects-hub",
+      "isLive": true,
+      "isPrivate": false
+    },
+    {
+      "name": "web1",
+      "title": "웹 학습 연습(2019)",
+      "desc": "웹 기초 학습 연습 저장소",
+      "category": "tool",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/AHNHYUNGJIN/web1",
+      "isLive": false,
+      "isPrivate": false
     }
   ];
 
@@ -660,7 +1127,7 @@
       <div class="project-card">
         <div>
           <div class="project-card-header">
-            <h3 class="project-title">${p.title}</h3>
+            <h3 class="project-title">${p.title}${p.isPrivate ? ' <span title="비공개 저장소">🔒</span>' : ''}</h3>
             ${p.isLive ? '<span class="tag-badge tag-live">🚀 Live</span>' : '<span class="tag-badge tag-github">⭐ Repo</span>'}
           </div>
           <span class="project-category">${getCategoryName(p.category)}</span>
