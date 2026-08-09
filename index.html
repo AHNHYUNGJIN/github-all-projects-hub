@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AHNHYUNGJIN 마스터 프로젝트 허브</title>
 <meta name="description" content="GitHub에 저장 및 Vercel로 라이브 배포된 모든 프로젝트, 애플리케이션, 체육 도구 및 AI 매뉴얼 통합 모음집">
-<meta name="theme-color" content="#0B1120">
+<meta name="theme-color" content="#05060F">
 <meta property="og:title" content="AHNHYUNGJIN 마스터 프로젝트 허브">
 <meta property="og:description" content="라이브 배포 앱 · 체육 도구 · AI 학습 자료를 한 곳에서 탐색하는 통합 대시보드">
 <meta property="og:type" content="website">
@@ -13,28 +13,31 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root {
-    --bg: #0B1120;
-    --bg-soft: #0F172A;
-    --surface: rgba(30, 41, 59, 0.5);
-    --surface-solid: #16203A;
-    --border: rgba(148, 163, 184, 0.16);
-    --border-strong: rgba(148, 163, 184, 0.32);
-    --text: #E2E8F0;
-    --text-sub: #94A3B8;
-    --text-muted: #64748B;
-    --accent: #818CF8;
-    --accent-2: #22D3EE;
-    --live: #4ADE80;
-    --pe: #FB923C;
-    --guide: #A78BFA;
-    --tool: #38BDF8;
+    /* 심우주 팔레트 — 배경은 거의 검게, 색은 항성·성운에서만 나온다 */
+    --bg: #05060F;
+    --bg-soft: #090C1B;
+    --void: #03040A;
+    --surface: rgba(20, 27, 51, 0.52);
+    --surface-solid: #111832;
+    --border: rgba(162, 178, 226, 0.13);
+    --border-strong: rgba(162, 178, 226, 0.30);
+    --text: #E7EBF7;
+    --text-sub: #98A4C6;
+    --text-muted: #626E8F;
+    --accent: #8B9CFF;
+    --accent-2: #67E8F9;
+    --live: #5EE9A4;
+    --pe: #FFB454;
+    --guide: #B69CFF;
+    --tool: #6FE3FF;
+    --star: #DCE6FF;
     --radius: 18px;
     --radius-sm: 10px;
     --dur-fast: 160ms;
     --dur: 260ms;
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-    --shadow-card: 0 10px 30px -12px rgba(2, 6, 23, 0.7);
-    --shadow-hover: 0 18px 44px -14px rgba(2, 6, 23, 0.85);
+    --shadow-card: 0 14px 38px -18px rgba(0, 0, 0, 0.9);
+    --shadow-hover: 0 24px 60px -20px rgba(0, 0, 0, 0.95);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,61 +53,162 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  ::selection { background: rgba(129, 140, 248, 0.35); }
+  ::selection { background: rgba(139, 156, 255, 0.35); }
+
+  /* 스크롤바도 밤하늘 안에 */
+  * { scrollbar-width: thin; scrollbar-color: rgba(139, 156, 255, 0.32) transparent; }
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(139, 156, 255, 0.26);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(139, 156, 255, 0.45); background-clip: content-box; }
 
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 
-  /* ---------- Ambient background ---------- */
+  /* ---------- Deep field: 별 · 성운 · 은하수 ---------- */
   .bg-scene {
     position: fixed; inset: 0; z-index: -1; overflow: hidden;
     background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99, 102, 241, 0.14), transparent 60%),
+      radial-gradient(ellipse 120% 70% at 50% -20%, #0D1230 0%, transparent 62%),
+      radial-gradient(ellipse 90% 60% at 12% 105%, #0A1428 0%, transparent 60%),
       var(--bg);
   }
-  .bg-scene::before {
-    content: "";
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 75%);
+
+  /* 별 — 캔버스에 한 번만 그린다(정적). 스크롤에 아주 살짝 따라 움직여 깊이를 만든다 */
+  .starfield {
+    position: absolute; inset: -6% 0; width: 100%; height: 112%;
+    display: block; will-change: transform;
   }
-  .orb {
-    position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5;
+
+  /* 은하수 띠 */
+  .milky {
+    position: absolute; left: -25%; right: -25%; top: 8%; height: 46%;
+    background: linear-gradient(96deg,
+      transparent 0%, rgba(120, 140, 255, 0.045) 22%,
+      rgba(180, 150, 255, 0.075) 45%, rgba(110, 200, 255, 0.05) 68%, transparent 92%);
+    filter: blur(48px);
+    transform: rotate(-14deg);
+  }
+
+  .nebula {
+    position: absolute; border-radius: 50%;
+    filter: blur(96px);
+    mix-blend-mode: screen;
     will-change: transform;
   }
-  .orb-1 { width: 480px; height: 480px; left: -140px; top: -120px; background: rgba(99, 102, 241, 0.32); animation: drift1 22s ease-in-out infinite alternate; }
-  .orb-2 { width: 420px; height: 420px; right: -120px; top: 60px; background: rgba(34, 211, 238, 0.20); animation: drift2 26s ease-in-out infinite alternate; }
-  .orb-3 { width: 380px; height: 380px; left: 42%; top: 380px; background: rgba(167, 139, 250, 0.16); animation: drift1 30s ease-in-out infinite alternate-reverse; }
-  @keyframes drift1 { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(70px, 50px, 0) scale(1.12); } }
-  @keyframes drift2 { from { transform: translate3d(0, 0, 0) scale(1.05); } to { transform: translate3d(-60px, 40px, 0) scale(0.95); } }
+  .neb-1 {
+    width: 620px; height: 520px; left: -180px; top: -160px;
+    background: radial-gradient(circle at 40% 40%, rgba(122, 108, 255, 0.5), rgba(90, 60, 200, 0.16) 55%, transparent 72%);
+    animation: drift-a 34s ease-in-out infinite alternate;
+  }
+  .neb-2 {
+    width: 560px; height: 460px; right: -160px; top: 30px;
+    background: radial-gradient(circle at 55% 45%, rgba(60, 200, 255, 0.34), rgba(40, 120, 200, 0.12) 55%, transparent 72%);
+    animation: drift-b 41s ease-in-out infinite alternate;
+  }
+  .neb-3 {
+    width: 720px; height: 560px; left: 34%; top: 46%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 130, 190, 0.20), rgba(160, 70, 200, 0.10) 55%, transparent 72%);
+    animation: drift-a 52s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes drift-a { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(80px, 54px, 0) scale(1.14); } }
+  @keyframes drift-b { from { transform: translate3d(0,0,0) scale(1.06); } to { transform: translate3d(-70px, 46px, 0) scale(0.94); } }
+
+  /* 유성 — 아주 가끔 지나간다 */
+  .shooting {
+    position: absolute; top: 14%; left: 78%;
+    width: 2px; height: 2px; border-radius: 50%;
+    background: var(--star);
+    box-shadow: 0 0 6px 1px rgba(220, 230, 255, 0.9);
+    opacity: 0;
+    animation: shoot 19s linear infinite;
+  }
+  .shooting::after {
+    content: ""; position: absolute; right: 1px; top: 50%;
+    width: 130px; height: 1px; transform: translateY(-50%);
+    background: linear-gradient(to left, rgba(220, 230, 255, 0.85), transparent);
+  }
+  @keyframes shoot {
+    0%, 88% { opacity: 0; transform: translate3d(0, 0, 0); }
+    89% { opacity: 1; }
+    97% { opacity: 0.9; transform: translate3d(-620px, 340px, 0); }
+    98%, 100% { opacity: 0; transform: translate3d(-620px, 340px, 0); }
+  }
+
+  /* 가장자리를 어둡게 눌러 시선을 가운데로 */
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 78% 68% at 50% 42%, transparent 42%, rgba(3, 4, 10, 0.72) 100%);
+  }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); }
 
   /* ---------- Hero ---------- */
-  header.hero { text-align: center; padding: clamp(56px, 9vh, 96px) 0 36px; }
+  header.hero {
+    position: relative; text-align: center;
+    padding: clamp(64px, 10vh, 112px) 0 40px;
+  }
+
+  /* 제목 뒤에 깔리는 궤도면 — 작은 위성이 한 바퀴 돈다 */
+  .hero-orbits {
+    position: absolute; left: 50%; top: clamp(16px, 2.5vh, 46px);
+    width: min(720px, 96vw); height: 280px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 58% 72% at 50% 48%, #000 12%, transparent 74%);
+    -webkit-mask-image: radial-gradient(ellipse 58% 72% at 50% 48%, #000 12%, transparent 74%);
+  }
+  .hero-orbits .ring {
+    position: absolute; left: 50%; top: 50%;
+    border: 1px solid rgba(162, 178, 226, 0.13);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotateX(74deg);
+  }
+  .ring.r1 { width: 300px; height: 300px; }
+  .ring.r2 { width: 460px; height: 460px; border-color: rgba(162, 178, 226, 0.085); }
+  .ring.r3 { width: 640px; height: 640px; border-color: rgba(162, 178, 226, 0.05); }
+  .ring.r1 { animation: spin 26s linear infinite; }
+  .ring.r2 { animation: spin 44s linear infinite reverse; }
+  .ring.r1::after, .ring.r2::after {
+    content: ""; position: absolute; top: -3px; left: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 12px 2px rgba(103, 232, 249, 0.7);
+  }
+  .ring.r2::after { background: var(--guide); box-shadow: 0 0 12px 2px rgba(182, 156, 255, 0.6); }
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotateX(74deg) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotateX(74deg) rotate(360deg); }
+  }
+
+  .hero > *:not(.hero-orbits) { position: relative; }
 
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 7px 16px; border-radius: 999px;
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(129, 140, 248, 0.35);
-    color: #C7D2FE; font-size: 0.83rem; font-weight: 600;
+    background: linear-gradient(120deg, rgba(139, 156, 255, 0.14), rgba(103, 232, 249, 0.08));
+    border: 1px solid rgba(139, 156, 255, 0.32);
+    box-shadow: 0 0 24px -6px rgba(139, 156, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    color: #CBD5FF; font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.02em;
     animation: fadeDown 0.6s var(--ease-out) both;
   }
   .hero-badge svg { width: 14px; height: 14px; }
 
   h1 {
-    margin: 20px 0 14px;
-    font-size: clamp(1.9rem, 5vw, 3.1rem);
-    font-weight: 800; letter-spacing: -0.03em; line-height: 1.2;
-    background: linear-gradient(120deg, #F8FAFC 20%, #A5B4FC 55%, #67E8F9 90%);
+    margin: 22px 0 14px;
+    font-size: clamp(1.9rem, 5vw, 3.2rem);
+    font-weight: 800; letter-spacing: -0.032em; line-height: 1.16;
+    background: linear-gradient(104deg, #FFFFFF 12%, #C3CCFF 44%, #8FE9FF 72%, #E3C8FF 96%);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; color: transparent;
+    filter: drop-shadow(0 0 26px rgba(139, 156, 255, 0.28));
     animation: fadeDown 0.6s var(--ease-out) 0.08s both;
   }
   .hero-sub {
@@ -143,7 +247,7 @@
     position: sticky; top: 12px; z-index: 50;
     margin: 26px 0 8px;
     padding: 12px;
-    background: rgba(11, 17, 32, 0.78);
+    background: rgba(9, 12, 27, 0.80);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     backdrop-filter: blur(16px) saturate(1.5);
@@ -162,7 +266,7 @@
   .search-box:focus-within .search-icon { color: var(--accent); }
   .search-input {
     width: 100%; padding: 11px 76px 11px 42px;
-    background: rgba(15, 23, 42, 0.7);
+    background: rgba(13, 18, 38, 0.72);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     color: var(--text); font-size: 0.95rem; font-family: inherit;
@@ -170,8 +274,8 @@
   }
   .search-input::placeholder { color: var(--text-muted); }
   .search-input:focus {
-    outline: none; border-color: rgba(129, 140, 248, 0.6);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+    outline: none; border-color: rgba(139, 156, 255, 0.6);
+    box-shadow: 0 0 0 3px rgba(139, 156, 255, 0.20);
   }
   .search-kbd {
     position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
@@ -194,13 +298,13 @@
   .sort-select {
     appearance: none; -webkit-appearance: none;
     padding: 11px 36px 11px 14px;
-    background: rgba(15, 23, 42, 0.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+    background: rgba(13, 18, 38, 0.72) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     color: var(--text); font-size: 0.88rem; font-family: inherit; cursor: pointer;
     transition: border-color var(--dur-fast);
   }
-  .sort-select:hover, .sort-select:focus { border-color: rgba(129, 140, 248, 0.6); outline: none; }
+  .sort-select:hover, .sort-select:focus { border-color: rgba(139, 156, 255, 0.6); outline: none; }
   .sort-select option { background: var(--surface-solid); }
 
   .filter-tabs { display: flex; gap: 7px; flex-wrap: wrap; }
@@ -221,11 +325,11 @@
     transition: background var(--dur-fast), color var(--dur-fast);
   }
   .tab-btn.active {
-    background: linear-gradient(120deg, rgba(99, 102, 241, 0.25), rgba(34, 211, 238, 0.16));
-    border-color: rgba(129, 140, 248, 0.55);
+    background: linear-gradient(120deg, rgba(139, 156, 255, 0.26), rgba(103, 232, 249, 0.16));
+    border-color: rgba(139, 156, 255, 0.55);
     color: #EEF2FF;
   }
-  .tab-btn.active .cnt { background: rgba(129, 140, 248, 0.3); color: #E0E7FF; }
+  .tab-btn.active .cnt { background: rgba(139, 156, 255, 0.3); color: #E0E7FF; }
 
   .result-line {
     display: flex; align-items: baseline; gap: 8px;
@@ -259,17 +363,28 @@
   }
   .card::before {
     content: "";
-    position: absolute; inset: 0 0 auto 0; height: 2.5px;
+    position: absolute; inset: 0 0 auto 0; height: 1.5px;
     background: linear-gradient(90deg, transparent, var(--cat-color, var(--accent)), transparent);
     opacity: 0; transition: opacity var(--dur);
   }
+  /* 커서를 따라다니는 항성광 — 카드가 빛을 받는 느낌 */
+  .card::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%),
+      color-mix(in srgb, var(--cat-color, var(--accent)) 16%, transparent), transparent 60%);
+    opacity: 0; transition: opacity var(--dur);
+    pointer-events: none;
+  }
   .card:hover, .card:focus-visible {
     transform: translateY(-5px);
-    border-color: var(--border-strong);
-    background: rgba(30, 41, 59, 0.72);
-    box-shadow: var(--shadow-hover);
+    border-color: color-mix(in srgb, var(--cat-color, var(--accent)) 42%, var(--border-strong));
+    background: rgba(24, 32, 60, 0.74);
+    box-shadow: var(--shadow-hover),
+                0 0 34px -14px color-mix(in srgb, var(--cat-color, var(--accent)) 70%, transparent);
   }
   .card:hover::before, .card:focus-visible::before { opacity: 1; }
+  .card:hover::after { opacity: 1; }
   .card:active { transform: translateY(-2px) scale(0.99); }
   .card.cat-pe { --cat-color: var(--pe); }
   .card.cat-guide { --cat-color: var(--guide); }
@@ -291,7 +406,7 @@
   .badge-new {
     padding: 3px 9px; border-radius: 999px;
     font-size: 0.68rem; font-weight: 800; letter-spacing: 0.04em;
-    background: linear-gradient(120deg, #6366F1, #22D3EE);
+    background: linear-gradient(120deg, #7C8CFF, #67E8F9);
     color: #F8FAFC;
   }
 
@@ -374,7 +489,7 @@
   /* ---------- View switch ---------- */
   .view-switch {
     display: inline-flex; gap: 3px; padding: 3px;
-    background: rgba(15, 23, 42, 0.7);
+    background: rgba(13, 18, 38, 0.72);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
   }
@@ -387,7 +502,7 @@
   .view-btn svg { width: 15px; height: 15px; }
   .view-btn:hover { color: var(--text-sub); }
   .view-btn.active {
-    background: linear-gradient(120deg, rgba(99, 102, 241, 0.28), rgba(34, 211, 238, 0.18));
+    background: linear-gradient(120deg, rgba(139, 156, 255, 0.30), rgba(103, 232, 249, 0.18));
     color: #EEF2FF;
   }
 
@@ -403,9 +518,10 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background:
-      radial-gradient(900px 520px at 50% 42%, rgba(56, 189, 248, 0.07), transparent 70%),
-      radial-gradient(700px 460px at 18% 78%, rgba(167, 139, 250, 0.07), transparent 70%),
-      #080D19;
+      radial-gradient(900px 520px at 50% 40%, rgba(103, 232, 249, 0.07), transparent 70%),
+      radial-gradient(760px 480px at 16% 80%, rgba(182, 156, 255, 0.09), transparent 70%),
+      radial-gradient(620px 420px at 88% 22%, rgba(255, 130, 190, 0.05), transparent 70%),
+      var(--void);
     box-shadow: var(--shadow-card);
     overflow: hidden;
     touch-action: none;
@@ -423,13 +539,13 @@
   .g-btn {
     width: 34px; height: 34px; border-radius: 9px;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(15, 23, 42, 0.82);
+    background: rgba(13, 18, 38, 0.84);
     border: 1px solid var(--border);
     color: var(--text-sub);
     backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     transition: color var(--dur-fast), border-color var(--dur-fast), background var(--dur-fast);
   }
-  .g-btn:hover { color: var(--text); border-color: var(--border-strong); background: rgba(30, 41, 59, 0.9); }
+  .g-btn:hover { color: var(--text); border-color: var(--border-strong); background: rgba(28, 38, 70, 0.9); }
   .g-btn:active { transform: scale(0.94); }
   .g-btn svg { width: 16px; height: 16px; }
 
@@ -437,7 +553,7 @@
     position: absolute; left: 12px; bottom: 12px; z-index: 3;
     display: flex; flex-wrap: wrap; gap: 6px 12px;
     padding: 9px 13px; max-width: calc(100% - 120px);
-    background: rgba(11, 17, 32, 0.78);
+    background: rgba(9, 12, 27, 0.80);
     border: 1px solid var(--border);
     border-radius: 12px;
     backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -452,12 +568,17 @@
   .lg-ring { width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--live); }
 
   .graph-hint {
-    position: absolute; left: 14px; top: 12px; z-index: 3;
-    display: flex; flex-wrap: wrap; gap: 4px 10px; max-width: calc(100% - 70px);
-    color: var(--text-muted); font-size: 0.76rem;
-    text-shadow: 0 1px 6px rgba(2, 6, 23, 0.9);
+    position: absolute; left: 12px; top: 12px; z-index: 3;
+    display: flex; flex-wrap: wrap; gap: 4px 10px; max-width: calc(100% - 62px);
+    padding: 8px 13px;
+    background: rgba(6, 9, 22, 0.72);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    color: var(--text-muted); font-size: 0.75rem;
     pointer-events: none;
   }
+  .graph-hint span + span { padding-left: 10px; border-left: 1px solid var(--border); }
   .graph-hint kbd {
     padding: 1px 6px; border-radius: 5px; border: 1px solid var(--border);
     font-family: ui-monospace, monospace; font-size: 0.7rem; color: var(--text-sub);
@@ -466,7 +587,7 @@
   .graph-tip {
     position: absolute; z-index: 4; max-width: 280px;
     padding: 11px 13px;
-    background: rgba(15, 23, 42, 0.96);
+    background: rgba(12, 17, 36, 0.96);
     border: 1px solid var(--border-strong);
     border-radius: 12px;
     box-shadow: 0 16px 40px -16px rgba(2, 6, 23, 0.95);
@@ -511,8 +632,8 @@
   .empty-state p { font-size: 0.88rem; margin-bottom: 20px; }
   .btn-reset {
     padding: 10px 22px; border-radius: var(--radius-sm);
-    background: linear-gradient(120deg, rgba(99, 102, 241, 0.3), rgba(34, 211, 238, 0.2));
-    border: 1px solid rgba(129, 140, 248, 0.5);
+    background: linear-gradient(120deg, rgba(139, 156, 255, 0.32), rgba(103, 232, 249, 0.20));
+    border: 1px solid rgba(139, 156, 255, 0.5);
     color: #EEF2FF; font-weight: 700; font-size: 0.88rem;
     transition: transform var(--dur-fast), filter var(--dur-fast);
   }
@@ -524,7 +645,7 @@
     position: fixed; right: 22px; bottom: 22px; z-index: 60;
     width: 44px; height: 44px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(30, 41, 59, 0.85);
+    background: rgba(24, 32, 60, 0.86);
     border: 1px solid var(--border-strong);
     color: var(--text-sub);
     backdrop-filter: blur(10px);
@@ -573,13 +694,22 @@
 <body>
 
 <div class="bg-scene" aria-hidden="true">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+  <canvas class="starfield" id="starfield"></canvas>
+  <div class="milky"></div>
+  <div class="nebula neb-1"></div>
+  <div class="nebula neb-2"></div>
+  <div class="nebula neb-3"></div>
+  <div class="shooting"></div>
+  <div class="vignette"></div>
 </div>
 
 <div class="container">
   <header class="hero">
+    <div class="hero-orbits" aria-hidden="true">
+      <span class="ring r3"></span>
+      <span class="ring r2"></span>
+      <span class="ring r1"></span>
+    </div>
     <div class="hero-badge">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
       GitHub &amp; Vercel 통합 대시보드
@@ -667,7 +797,7 @@
               aria-label="프로젝트 관계 맵. 노드를 클릭하면 해당 도구가 새 탭에서 열립니다. 카드 보기로 전환하면 같은 목록을 표 형태로 볼 수 있습니다."></canvas>
 
       <p class="graph-hint">
-        <span>드래그로 이동 · 휠로 확대</span>
+        <span>드래그로 이동 · <kbd>Ctrl</kbd>+휠로 확대</span>
         <span>노드 클릭 → 도구 열기</span>
         <span>카테고리 클릭 → 접기/펼치기</span>
         <span><kbd>F</kbd> 맞춤 · <kbd>R</kbd> 재배치</span>
@@ -734,15 +864,15 @@
     {"name":"andong-sports-training","title":"안동 스포츠강사 연수","desc":"안동교육지원청 2026학년도 스포츠강사 연수 — 쉽고 즐거운 신체활동","category":"guide","liveUrl":"https://andong-sports-training.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/andong-sports-training","isLive":true,"isPrivate":false,"created":"2026-07-09"},
     {"name":"clasp-guide-site","title":"Google Apps Script clasp 초보자 가이드","desc":"clasp 설치부터 구글 시트 연동, 소스코드 업로드 및 웹앱 자동 배포까지 배우는 실전 매뉴얼","category":"guide","liveUrl":"https://clasp-guide-site.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/clasp-guide-site","isLive":true,"isPrivate":false,"created":"2026-07-19"},
     {"name":"google-sites-html-deploy-manual","title":"구글 사이트 도구 HTML 웹앱 배포 매뉴얼","desc":"구글 사이트 도구(Google Sites)에 HTML5 및 자바스크립트 앱을 임베드하여 공개 배포하는 가이드","category":"guide","liveUrl":"https://google-sites-html-deploy-manual.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/google-sites-html-deploy-manual","isLive":true,"isPrivate":false,"created":"2026-06-28"},
-    {"name":"aistudio-vercel-deploy-guide","title":"AI Studio 앱 GitHub & Vercel 배포 가이드","desc":"Google AI Studio에서 제작한 앱을 GitHub 저장소에 업로드하고 Vercel 호스팅으로 배포하는 실습 가이드","category":"guide","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/aistudio-vercel-deploy-guide","isLive":false,"isPrivate":false,"created":"2026-06-27"},
+    {"name":"aistudio-vercel-deploy-guide","title":"AI Studio 앱 GitHub & Vercel 배포 가이드","desc":"Google AI Studio에서 만든 앱을 GitHub에 올리고 Vercel로 배포하는 실습 가이드","category":"guide","liveUrl":"https://aistudio-vercel-deploy-guide.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/aistudio-vercel-deploy-guide","isLive":true,"isPrivate":false,"created":"2026-06-27"},
     {"name":"antigravity-guide","title":"Google Antigravity 사용 및 설정 통합 가이드","desc":"Antigravity CLI, slash 명령어, MCP, 사이드카 및 규칙 가이드 모음","category":"guide","liveUrl":"https://antigravity-guide-iota.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/antigravity-guide","isLive":true,"isPrivate":false,"created":"2026-06-28"},
     {"name":"ms-file-convert-to-googleworkspace-file","title":"MS 오피스 → Google Workspace 자동 변환 매뉴얼","desc":"MS Word, Excel, PowerPoint 파일들을 구글 문서, 스프레드시트, 프레젠테이션으로 자동 변환하는 매뉴얼","category":"guide","liveUrl":"https://ms-file-convert-to-googleworkspace.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/ms-file-convert-to-googleworkspace-file","isLive":true,"isPrivate":true,"created":"2026-06-27"},
     {"name":"pe-claude-guide","title":"체육 교사를 위한 Claude AI 활용 가이드","desc":"체육 지도안 작성, 평가지 제작, 동아리 활동 기획 시 Claude AI를 효과적으로 사용하는 프롬프팅 가이드","category":"guide","liveUrl":"https://pe-claude-guide.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/pe-claude-guide","isLive":true,"isPrivate":true,"created":"2026-06-27"},
     {"name":"vibe-coding-edu-portal","title":"바이브코딩 교육 포털","desc":"바이브코딩 수업·연수용 교육 포털 사이트","category":"guide","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/vibe-coding-edu-portal","isLive":false,"isPrivate":false,"created":"2026-07-22"},
-    {"name":"vibe-coding-glossary","title":"바이브코딩 용어집","desc":"바이브코딩·AI 개발 용어를 정리한 용어집","category":"guide","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/vibe-coding-glossary","isLive":false,"isPrivate":false,"created":"2026-05-09"},
+    {"name":"vibe-coding-glossary","title":"바이브코딩 용어집","desc":"바이브코딩·AI 개발에서 자주 나오는 용어를 정리한 용어 사전","category":"guide","liveUrl":"https://vibe-coding-glossary-hazel.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/vibe-coding-glossary","isLive":true,"isPrivate":false,"created":"2026-05-09"},
     {"name":"cbi-question-maker","title":"개념 기반 탐구 수업(CBI) 질문 생성기","desc":"체육 및 각 교과 수업을 위한 개념적 탐구 질문을 자동 구성해주는 교사 지원 도구","category":"guide","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/cbi-question-maker","isLive":false,"isPrivate":false,"created":"2025-12-25"},
-    {"name":"summer-safety-2026","title":"2026 여름철 안전교육 자료","desc":"여름철 물놀이·폭염 등 안전교육 안내 자료","category":"guide","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/summer-safety-2026","isLive":false,"isPrivate":false,"created":"2026-07-21"},
-    {"name":"claude-cowork-50","title":"Claude Cowork 활용 50제","desc":"Claude Cowork 실무 활용 예제 50제 — 9개 카테고리, 검색·필터·비즈니스/이모지 모드 (GitHub 저장소 미생성, Vercel 직접 배포)","category":"guide","liveUrl":"https://claude-cowork-50.vercel.app","githubUrl":"","isLive":true,"isPrivate":false,"created":"2026-07-31"},
+    {"name":"summer-safety-2026","title":"2026 여름철 안전교육 자료","desc":"여름방학 학교폭력예방·생활안전 4단계 학습 자료(PPT·영상·수칙·서약)","category":"guide","liveUrl":"https://summer-safety-2026.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/summer-safety-2026","isLive":true,"isPrivate":false,"created":"2026-07-21"},
+    {"name":"claude-cowork-50","title":"Claude Cowork 활용 50제","desc":"Claude Cowork 실무 활용 예제 50제 — 9개 카테고리, 검색·필터·비즈니스/이모지 모드","category":"guide","liveUrl":"https://claude-cowork-50.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/claude-cowork-50","isLive":true,"isPrivate":false,"created":"2026-07-31"},
     {"name":"gemini-notebook-50","title":"Gemini Notebook 활용 50제","desc":"Gemini Notebook(구 NotebookLM) 실전 활용 예제 50제 + 크롬 확장 프로그램 8선 부록","category":"guide","liveUrl":"https://gemini-notebook-50.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/gemini-notebook-50","isLive":true,"isPrivate":true,"created":"2026-07-31"},
     {"name":"google-apps-script-100","title":"Google Apps Script 100제","desc":"Google Apps Script 실전 예제 100선 — 시트·설문·문서·Gmail·트리거·웹앱 등 10개 카테고리","category":"guide","liveUrl":"https://google-apps-script-100.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/google-apps-script-100","isLive":true,"isPrivate":true,"created":"2026-07-31"},
     {"name":"rungate","title":"RunGate 모션 달리기 타이머","desc":"좌우 게이트/중앙 라인/감지 존 3모드 모션 인식 달리기 기록 타이머 — 학생 기록·CSV 내보내기 지원","category":"pe","liveUrl":"https://rungate.netlify.app","githubUrl":"https://github.com/AHNHYUNGJIN/rungate","isLive":true,"isPrivate":true,"created":"2026-07-29"},
@@ -750,31 +880,31 @@
     {"name":"running-timer","title":"육상 & 런닝 스톱워치 타임 트래커","desc":"모바일 화면에 최적화된 라운드별 랩타임 측정 및 멀티 트랙 런닝 스톱워치 타이머","category":"pe","liveUrl":"https://running-timer-ashen.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/running-timer","isLive":true,"isPrivate":true,"created":"2026-07-05"},
     {"name":"run-motion-timer","title":"런 모션 타이머(초기 버전)","desc":"모션 인식 달리기 타이머 초기 실험 버전","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/run-motion-timer","isLive":false,"isPrivate":false,"created":"2026-07-09"},
     {"name":"motion-arcade","title":"모션 인식 아케이드 게임","desc":"TensorFlow.js MoveNet 기반 신체 동작 인식 체육 아케이드 게임","category":"pe","liveUrl":"https://motion-arcade-fawn.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/motion-arcade","isLive":true,"isPrivate":false,"created":"2026-07-10"},
-    {"name":"armotiongame6","title":"AR 모션 게임 6","desc":"카메라 기반 웹 동작 인식으로 몸을 움직여 즐기는 AR 체육 게임","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/armotiongame6","isLive":false,"isPrivate":false,"created":"2026-04-18"},
+    {"name":"armotiongame6","title":"Motionverse AR — 모션 인식 게임","desc":"카메라로 몸 동작을 인식해 즐기는 웹 AR 체육 게임","category":"pe","liveUrl":"https://armotiongame6.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/armotiongame6","isLive":true,"isPrivate":false,"created":"2026-04-18"},
     {"name":"motionanalysis4pe","title":"체육 수업 동작 분석 & 비디오 딜레이","desc":"웹캠으로 학생들의 운동 동작을 실시간 지연(Video Delay) 재생하고 자세를 프레임 단위로 분석하는 피드백 프로그램","category":"pe","liveUrl":"https://motionanalyzer.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/motionanalysis4pe","isLive":true,"isPrivate":false,"created":"2026-04-13"},
-    {"name":"finger-timer-clone","title":"핑거 타이머","desc":"손가락 터치 기반 순발력 타이머 앱","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/finger-timer-clone","isLive":false,"isPrivate":false,"created":"2026-07-10"},
-    {"name":"stacktimer","title":"모바일 스포츠 스태킹 타이머","desc":"스포츠 스태킹(컵 스태킹) 랩타임 측정 전용 모바일 터치 스톱워치","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/stacktimer","isLive":false,"isPrivate":false,"created":"2026-01-19"},
+    {"name":"finger-timer-clone","title":"핑거 타이머","desc":"큐브·스포츠 스태킹용 손가락 터치 스톱워치 — 양손 센서 방식 기록 측정","category":"pe","liveUrl":"https://finger-timer.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/finger-timer-clone","isLive":true,"isPrivate":false,"created":"2026-07-10"},
+    {"name":"stacktimer","title":"프로 스태킹 타이머 V2","desc":"스포츠 스태킹(컵 스태킹) 듀얼 센서 랩타임 측정 전용 모바일 터치 스톱워치","category":"pe","liveUrl":"https://stacktimer-six.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/stacktimer","isLive":true,"isPrivate":false,"created":"2026-01-19"},
     {"name":"tennis-speed","title":"테니스 스피드 측정","desc":"테니스 스윙·서브 속도 측정 웹앱","category":"pe","liveUrl":"https://tennis-speed.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/tennis-speed","isLive":true,"isPrivate":false,"created":"2026-07-08"},
     {"name":"soccer-speed","title":"축구 스피드 측정","desc":"축구 킥 속도 측정 웹앱","category":"pe","liveUrl":"https://soccer-speed.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/soccer-speed","isLive":true,"isPrivate":false,"created":"2026-07-08"},
     {"name":"cone-knockout","title":"콘 낙아웃 체육 서바이벌 게임","desc":"체육 수업 시 팀별 콘 쓰러뜨리기 서바이벌 경기 규칙 및 타이머 웹앱","category":"pe","liveUrl":"https://cone-knockout.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/cone-knockout","isLive":true,"isPrivate":false,"created":"2026-07-05"},
     {"name":"jumprope","title":"줄넘기 급수 및 횟수 기록 매니저","desc":"학생별 음악 줄넘기 및 횟수 급수 기준 조회 및 기록 트래킹 도구","category":"pe","liveUrl":"https://jumprope-swart.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/jumprope","isLive":true,"isPrivate":true,"created":"2026-07-05"},
     {"name":"kinball_score","title":"킨볼(Kin-Ball) 3팀 경기 전광판","desc":"킨볼 특유의 3팀(Pink, Grey, Black) 동시 참여 경기를 위한 전광판 및 특수 점수 집계 전용 웹앱","category":"pe","liveUrl":"https://kinballscore.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/kinball_score","isLive":true,"isPrivate":false,"created":"2026-07-11"},
     {"name":"scoreboard-all","title":"체육 및 경기용 통합 디지털 전광판","desc":"농구, 축구, 배구 등 다양한 종목의 경기 점수 및 타이머를 표시하는 전광판","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/scoreboard-all","isLive":false,"isPrivate":true,"created":"2026-03-08"},
-    {"name":"rhythm","title":"리듬 트레이닝 앱","desc":"리듬·박자 연습용 웹앱","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/rhythm","isLive":false,"isPrivate":false,"created":"2026-02-02"},
+    {"name":"rhythm","title":"리듬 비주얼라이저","desc":"테마별 리듬·박자 시각화 연습 웹앱","category":"pe","liveUrl":"https://rhythm-training.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/rhythm","isLive":true,"isPrivate":false,"created":"2026-02-02"},
     {"name":"YUTNORI","title":"민속놀이 디지털 윷놀이 웹앱","desc":"말판 이동 및 윷 던지기 확률 모듈이 포함된 디지털 민속 윷놀이 앱","category":"tool","liveUrl":"https://yutnori-app.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/YUTNORI","isLive":true,"isPrivate":false,"created":"2026-05-01"},
     {"name":"2026nakunsportsvolleyball","title":"2026 나쿤 스포츠배구","desc":"스포츠배구 경기 운영 웹 자료","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/2026nakunsportsvolleyball","isLive":false,"isPrivate":true,"created":"2026-03-17"},
-    {"name":"team-builder","title":"팀뽑기 — 학생 팀 편성 도구","desc":"같은 팀/다른 팀 제약과 균형을 지키는 학생 팀 자동 편성 도구 — 구글시트 복사·붙여넣기 지원 (GitHub 저장소 미등록, 로컬 보관)","category":"pe","liveUrl":"https://teamppopgi.netlify.app","githubUrl":"","isLive":true,"isPrivate":false,"created":""},
+    {"name":"team-builder","title":"팀뽑기 — 학생 팀 편성 도구","desc":"같은 팀/다른 팀 제약과 균형을 지키는 학생 팀 자동 편성 도구 — 구글시트 복사·붙여넣기 지원, 오프라인 동작(PWA). Netlify 미러: teamppopgi.netlify.app","category":"pe","liveUrl":"https://team-builder-psi.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/team-builder","isLive":true,"isPrivate":false,"created":"2026-08-09"},
     {"name":"pe-curriculum","title":"체육 교육과정 관리 대시보드","desc":"체육 수업 과목별 성취기준, 평가 기준 및 수업 계획을 효율적으로 시각화하고 관리하는 교육과정 대시보드 앱","category":"pe","liveUrl":"https://pe-curriculum-two.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/pe-curriculum","isLive":true,"isPrivate":true,"created":"2026-03-08"},
     {"name":"pe-plan-generator","title":"체육 지도안 생성기","desc":"체육 수업 지도안 자동 생성 도구","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/pe-plan-generator","isLive":false,"isPrivate":true,"created":"2026-07-27"},
-    {"name":"papsdatadb","title":"PAPS(학생건강체력평가) 등급 조회 DB","desc":"초·중·고 학생들의 PAPS 측정 항목 기준별 등급을 즉시 검색하고 계산해주는 도구","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/papsdatadb","isLive":false,"isPrivate":true,"created":"2026-01-11"},
-    {"name":"PAPS-GRADE-SEARCH","title":"PAPS 등급 검색(구버전)","desc":"팝스 등급을 검색해주는 도구 초기 버전","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/PAPS-GRADE-SEARCH","isLive":false,"isPrivate":false,"created":"2025-09-06"},
+    {"name":"papsdatadb","title":"PAPS 체력 측정 및 피드백","desc":"PAPS 측정값을 입력하면 항목별 등급과 맞춤 피드백을 돌려주는 도구","category":"pe","liveUrl":"https://papsdatadb.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/papsdatadb","isLive":true,"isPrivate":true,"created":"2026-01-11"},
+    {"name":"PAPS-GRADE-SEARCH","title":"PAPS 등급 계산기","desc":"초·중·고 PAPS 측정 항목별 등급을 즉시 계산·검색하는 도구","category":"pe","liveUrl":"https://paps-grade-search.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/PAPS-GRADE-SEARCH","isLive":true,"isPrivate":false,"created":"2025-09-06"},
     {"name":"papscoach-buddy","title":"팝스 코치 버디","desc":"PAPS 측정·지도 도우미","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/papscoach-buddy","isLive":false,"isPrivate":true,"created":"2026-03-08"},
     {"name":"pickleball-academy","title":"피클볼 아카데미","desc":"피클볼 수업·아카데미 운영 웹앱","category":"pe","liveUrl":"https://pickleball-academy-kappa.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/pickleball-academy","isLive":true,"isPrivate":true,"created":"2026-06-27"},
     {"name":"pickleball-academy-v2","title":"피클볼 아카데미 v2","desc":"피클볼 규칙 안내, 코트 라인업 생성, 경기 점수 기록 및 대진표 관리 시스템 v2","category":"pe","liveUrl":"https://pickleball-academy-v2.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/pickleball-academy-v2","isLive":true,"isPrivate":false,"created":"2026-07-13"},
-    {"name":"PICKLEBALL","title":"피클볼(초기 버전)","desc":"피클볼 규칙·경기 관리 초기 버전","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/PICKLEBALL","isLive":false,"isPrivate":false,"created":"2024-10-13"},
+    {"name":"PICKLEBALL","title":"피클볼 스코어보드","desc":"피클볼 경기 점수·서브권을 표시하는 전광판(초기 버전)","category":"pe","liveUrl":"https://pickleball-classic.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/PICKLEBALL","isLive":true,"isPrivate":false,"created":"2024-10-13"},
     {"name":"badminton-academy","title":"배드민턴 아카데미 대진표 매니저","desc":"배드민턴 수업 및 동호회 경기 대진표 자동 편성 및 코트별 점수 관리 웹 프로그램","category":"pe","liveUrl":"https://badminton-academy-gules.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/badminton-academy","isLive":true,"isPrivate":false,"created":"2026-07-13"},
     {"name":"sports-rules-mcp","title":"스포츠 규칙 검색 MCP 서버","desc":"체육 수업용 스포츠 규칙 검색 MCP 서버","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/sports-rules-mcp","isLive":false,"isPrivate":false,"created":"2026-07-09"},
-    {"name":"HEALTHY-PPT","title":"건강 & 체력 과학적 원리 HTML PPT","desc":"건강의 개념, 체력 요소, 운동 수행의 과학적 원리, FITT를 다루는 프레젠테이션 슬라이드","category":"pe","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/HEALTHY-PPT","isLive":false,"isPrivate":false,"created":"2025-10-03"},
+    {"name":"HEALTHY-PPT","title":"건강한 삶을 위한 운동의 과학","desc":"건강의 개념, 체력 요소, 운동 수행의 과학적 원리, FITT를 다루는 HTML 프레젠테이션","category":"pe","liveUrl":"https://healthy-ppt.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/HEALTHY-PPT","isLive":true,"isPrivate":false,"created":"2025-10-03"},
     {"name":"schoolpromise","title":"학교 약속","desc":"학교생활 약속(규칙) 안내 웹","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/schoolpromise","isLive":false,"isPrivate":true,"created":"2026-03-17"},
     {"name":"-","title":"세특 작성 도우미","desc":"세부능력 및 특기사항 작성을 돕는 도구","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/-","isLive":false,"isPrivate":true,"created":"2025-12-03"},
     {"name":"vice-principal-2026","title":"교감 업무 2026","desc":"2026학년도 교감 업무 관련 자료","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/vice-principal-2026","isLive":false,"isPrivate":true,"created":"2026-07-22"},
@@ -783,10 +913,10 @@
     {"name":"video_qr_booth","title":"비디오 QR 포토부스 시스템","desc":"학교 행사 및 수업에서 영상을 녹화하고 출력물에 QR 코드를 포함시켜 바로 영상을 다운로드할 수 있는 웹 기반 포토부스","category":"tool","liveUrl":"https://videoqrbooth.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/video_qr_booth","isLive":true,"isPrivate":false,"created":"2026-07-14"},
     {"name":"4cut4u_v2","title":"인생네컷 셀프 포토 스튜디오 웹앱","desc":"다양한 프레임 레이아웃과 필터를 제공하여 학교 축제 및 동아리 활동 시 셀프 4컷 사진을 촬영하고 출력하는 포토 앱 (정본 배포는 Netlify, 미러 4cut4uv2.vercel.app)","category":"tool","liveUrl":"https://4cut4u.netlify.app","githubUrl":"https://github.com/AHNHYUNGJIN/4cut4u_v2","isLive":true,"isPrivate":false,"created":"2026-07-14"},
     {"name":"youtube-summarizer","title":"유튜브 요약기","desc":"유튜브 영상 자막 기반 요약 도구","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/youtube-summarizer","isLive":false,"isPrivate":true,"created":"2026-07-09"},
-    {"name":"school-poster-prompt-gallery","title":"학교 행사 포스터 AI 프롬프트 갤러리","desc":"체육대회, 축제 등 학교 행사에 필요한 생성형 AI 포스터 이미지 및 프롬프트 모음 갤러리","category":"guide","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/school-poster-prompt-gallery","isLive":false,"isPrivate":true,"created":"2026-05-12"},
-    {"name":"poster-gallery","title":"포스터 갤러리","desc":"AI 생성 포스터 이미지 갤러리","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/poster-gallery","isLive":false,"isPrivate":true,"created":"2026-04-26"},
-    {"name":"hand-drawing","title":"핸드 드로잉","desc":"손 그림 그리기 웹앱","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/hand-drawing","isLive":false,"isPrivate":true,"created":"2026-07-27"},
-    {"name":"likepadlet","title":"라이크패들렛","desc":"패들렛 스타일 공유 게시판 웹앱","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/likepadlet","isLive":false,"isPrivate":false,"created":"2024-10-13"},
+    {"name":"school-poster-prompt-gallery","title":"학교 행사 포스터 AI 프롬프트 갤러리","desc":"체육대회·축제 등 학교 행사 포스터용 생성형 AI 프롬프트와 예시 이미지 갤러리","category":"guide","liveUrl":"https://school-poster-prompt-gallery.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/school-poster-prompt-gallery","isLive":true,"isPrivate":true,"created":"2026-05-12"},
+    {"name":"poster-gallery","title":"교육용 포스터 갤러리","desc":"AI로 만든 교육용 포스터 이미지 모음 갤러리","category":"tool","liveUrl":"https://poster-gallery-wine.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/poster-gallery","isLive":true,"isPrivate":true,"created":"2026-04-26"},
+    {"name":"hand-drawing","title":"에어 드로잉","desc":"카메라로 손을 인식해 허공에 그리는 캔버스 웹앱","category":"tool","liveUrl":"https://hand-drawing-seven.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/hand-drawing","isLive":true,"isPrivate":true,"created":"2026-07-27"},
+    {"name":"likepadlet","title":"라이크패들렛","desc":"패들렛 스타일 카드 공유 게시판 웹앱","category":"tool","liveUrl":"https://likepadlet.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/likepadlet","isLive":true,"isPrivate":false,"created":"2024-10-13"},
     {"name":"pomodoro-sheet-app","title":"Apple 스타일 구글시트 연동 포모도로 타이머","desc":"Apple 스타일 인터페이스와 구글 스프레드시트 연동으로 개인 집중 시간과 공부/작업 통계를 자동 저장하는 포모도로 앱","category":"tool","liveUrl":"https://pomodoro-sheet-app.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/pomodoro-sheet-app","isLive":true,"isPrivate":false,"created":"2026-05-10"},
     {"name":"capture4me","title":"화면 캡처 프로그램","desc":"화면 캡처 유틸리티","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/capture4me","isLive":false,"isPrivate":false,"created":"2026-05-15"},
     {"name":"particle-extension","title":"파티클 확장","desc":"파티클 효과 브라우저 확장/데모","category":"tool","liveUrl":"","githubUrl":"https://github.com/AHNHYUNGJIN/particle-extension","isLive":false,"isPrivate":false,"created":"2026-07-09"},
@@ -803,9 +933,9 @@
     {"name":"tomomath","title":"토모수학 — 초등 수학 학습 앱","desc":"토도수학 스타일 초등 1~6학년 수학 학습 웹앱 — 120스테이지, 문제 생성기 40종, 숫자 키패드 입력, 별·스티커 보상","category":"tool","liveUrl":"https://tomomath.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/tomomath","isLive":true,"isPrivate":true,"created":"2026-08-02"},
     {"name":"english-quest","title":"English Quest — 초등 영어 학습","desc":"초등 1~6학년 게이미피케이션 영어 학습 앱 — 24유닛, 게임 7종(TTS 플래시카드·퀴즈·퍼즐), XP·펫 진화·배지·일일 퀘스트","category":"tool","liveUrl":"https://english-quest-cyan.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/english-quest","isLive":true,"isPrivate":true,"created":"2026-08-02"},
     {"name":"lingobird","title":"LingoBird 영어 학습 앱","desc":"듀오링고 스타일 영어 학습 앱 — 5단원 20레슨, 문제 유형 6종, 하트·젬·스트릭·주간 리그, 참여자 중앙 기록 현황판","category":"tool","liveUrl":"https://lingobird.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/lingobird","isLive":true,"isPrivate":true,"created":"2026-08-02"},
-    {"name":"chess-salon","title":"체스 살롱","desc":"유러피안 클래식 스타일 체스 — AI 3단계 1인전, 한 화면 마주보기 2인전, 전체화면 몰입 모드 (GitHub 미연결, Vercel 직접 배포)","category":"tool","liveUrl":"https://chess-salon.vercel.app","githubUrl":"","isLive":true,"isPrivate":false,"created":"2026-08-02"},
-    {"name":"baduk-giwon","title":"바둑 기원","desc":"MCTS AI 4단계·자동 계가·형세판단·복기·SGF 저장 지원 바둑 게임 — 9/13/19줄, 접바둑, 마주보기 모드 (GitHub 미연결)","category":"tool","liveUrl":"https://baduk-giwon.vercel.app","githubUrl":"","isLive":true,"isPrivate":false,"created":"2026-08-02"},
-    {"name":"omok-salon","title":"오목 살롱","desc":"렌주룰 금수(3-3·4-4·장목) 판정 + AI 3단계 + 2인 대전 오목 — 캔버스 목재 보드, 무르기·전적 기록 (GitHub 미연결)","category":"tool","liveUrl":"https://omok-salon.vercel.app","githubUrl":"","isLive":true,"isPrivate":false,"created":"2026-08-02"},
+    {"name":"chess-salon","title":"체스 살롱","desc":"유러피안 클래식 스타일 체스 — AI 3단계 1인전, 한 화면 마주보기 2인전, 전체화면 몰입 모드","category":"tool","liveUrl":"https://chess-salon.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/chess-salon","isLive":true,"isPrivate":false,"created":"2026-08-02"},
+    {"name":"baduk-giwon","title":"바둑 기원","desc":"MCTS AI 4단계·자동 계가·형세판단·복기·SGF 저장 지원 바둑 게임 — 9/13/19줄, 접바둑, 마주보기 모드","category":"tool","liveUrl":"https://baduk-giwon.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/baduk-giwon","isLive":true,"isPrivate":false,"created":"2026-08-02"},
+    {"name":"omok-salon","title":"오목 살롱","desc":"렌주룰 금수(3-3·4-4·장목) 판정 + AI 3단계 + 2인 대전 오목 — 캔버스 목재 보드, 무르기·전적 기록","category":"tool","liveUrl":"https://omok-salon.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/omok-salon","isLive":true,"isPrivate":false,"created":"2026-08-02"},
     {"name":"maumgalpi","title":"마음갈피 — 감정 & 할 일 다이어리","desc":"무드미터로 감정을 기록하고 아이젠하워 매트릭스로 할 일을 자동 분류하는 정적 다이어리 앱 — 데이터는 브라우저에만 저장","category":"tool","liveUrl":"https://maumgalpi.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/maumgalpi","isLive":true,"isPrivate":true,"created":"2026-08-02"},
     {"name":"gbe-dept-library","title":"경상북도교육청 부서별 자료실 모아보기","desc":"경북교육청 17개 부서 누리집의 자료실 게시판을 한 화면에 모아 보는 웹앱 — 하루 2회 자동 갱신, 게시판별 실시간 재조회","category":"tool","liveUrl":"https://gbe-dept-library.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/gbe-dept-library","isLive":true,"isPrivate":true,"created":"2026-08-06"},
     {"name":"block-dodge","title":"블록 닷지 — 장애물 회피 게임","desc":"마우스·터치·키보드로 즐기는 캐주얼 회피 게임 — 30스테이지(보스 러시 3회), 장애물 12종·아이템 4종, 오리지널 블록 캐릭터 10종","category":"tool","liveUrl":"https://block-dodge.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/block-dodge","isLive":true,"isPrivate":true,"created":"2026-08-06"},
@@ -1012,6 +1142,17 @@
     render();
   });
 
+  /* 카드 위 커서 위치를 CSS 변수로 넘겨 항성광이 따라오게 한다 */
+  if (!reduceMotion && matchMedia('(hover: hover)').matches) {
+    grid.addEventListener('pointermove', e => {
+      const card = e.target.closest('.card');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+
   grid.addEventListener('click', e => {
     if (e.target.closest('a')) return;
     const card = e.target.closest('.card');
@@ -1041,8 +1182,15 @@
     const ctx = cv.getContext('2d');
     const canHover = matchMedia('(hover: hover)').matches;
 
-    const COLOR = { pe: '#FB923C', guide: '#A78BFA', tool: '#38BDF8', hub: '#22D3EE', live: '#4ADE80' };
+    const COLOR = { pe: '#FFB454', guide: '#B69CFF', tool: '#6FE3FF', hub: '#67E8F9', live: '#5EE9A4' };
     const DIM = 0.14;
+    /* 그래프도 같은 하늘 위에 있다 — 별을 미리 만들어 두고 매 프레임 얕게 시차 이동 */
+    const SKY = [];
+    for (let i = 0; i < 190; i++) {
+      SKY.push({ x: Math.random(), y: Math.random(),
+                 r: Math.random() < 0.08 ? 1.1 + Math.random() * 0.9 : 0.3 + Math.random() * 0.6,
+                 a: 0.10 + Math.random() * 0.5 });
+    }
 
     /* 주제 태그 — 카테고리를 가로지르는 연관선을 만든다 */
     const TAGS = [
@@ -1195,6 +1343,19 @@
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
+
+      /* 별하늘 — 그래프보다 훨씬 느리게 따라와 배경으로 물러난다 */
+      const px = tx * 0.12, py = ty * 0.12;
+      for (const s of SKY) {
+        let x = (s.x * W + px) % W, y = (s.y * H + py) % H;
+        if (x < 0) x += W;
+        if (y < 0) y += H;
+        ctx.globalAlpha = s.a;
+        ctx.fillStyle = '#DCE6FF';
+        ctx.beginPath(); ctx.arc(x, y, s.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
       ctx.save();
       ctx.translate(tx, ty); ctx.scale(k, k);
 
@@ -1281,11 +1442,15 @@
         /* 겹치면 우선순위 낮은 라벨은 그리지 않는다 — 겹쳐 뭉개는 것보다 낫다 */
         const must = n.kind !== 'project' || isFocus;
 
-        /* 아래가 막히면 위쪽에 놓아 본다 */
+        /* 아래가 막히면 위쪽에 놓아 본다. 패널 밖으로 잘리는 자리는 쓰지 않는다. */
         const mkBox = yy => ({ x: s.x - tw / 2 - 4, y: yy - 2, w: tw + 8, h: th });
+        const inView = b => b.x >= 2 && b.x + b.w <= W - 2 && b.y >= 2 && b.y + b.h <= H - 2;
         const below = s.y + n.r * k + 6, above = s.y - n.r * k - 4 - th;
         let y = null;
-        for (const cand of [below, above]) { if (!overlaps(mkBox(cand))) { y = cand; break; } }
+        for (const cand of [below, above]) {
+          const b = mkBox(cand);
+          if (inView(b) && !overlaps(b)) { y = cand; break; }
+        }
         if (y === null) { if (!must) continue; y = below; }
         placed.push(mkBox(y));
 
@@ -1515,7 +1680,11 @@
       if (!dragNode && !panning) { hover = null; showTip(null); dirty = true; run(); }
     });
 
+    /* 맨 휠은 페이지 스크롤에 양보한다 — 안 그러면 맵이 스크롤을 가로채 페이지가 안 내려간다.
+       확대는 Ctrl(⌘)+휠 · 핀치 · +/- 버튼. 전체화면일 땐 넘길 페이지가 없으니 그냥 확대. */
     cv.addEventListener('wheel', e => {
+      const zoomIntent = e.ctrlKey || e.metaKey || document.fullscreenElement === wrap;
+      if (!zoomIntent) return;
       e.preventDefault();
       const r = cv.getBoundingClientRect();
       zoomAt(e.clientX - r.left, e.clientY - r.top, Math.exp(-e.deltaY * 0.0016));
@@ -1588,6 +1757,81 @@
         if (raf) { cancelAnimationFrame(raf); raf = 0; }
       }
     };
+  })();
+
+  /* ---------- Starfield (배경) ----------
+     한 번만 그리고 끝낸다. 스크롤할 때만 아주 살짝 밀어 깊이를 만든다. */
+  const Stars = (function () {
+    const cv = document.getElementById('starfield');
+    if (!cv) return { draw() {} };
+    const ctx = cv.getContext('2d');
+
+    /* 별빛은 완전한 흰색이 아니다 — 청백/황백을 섞어야 하늘처럼 보인다 */
+    const TINTS = ['220,230,255', '255,235,214', '200,220,255', '255,255,255', '190,205,255'];
+
+    function draw() {
+      const w = cv.clientWidth, h = cv.clientHeight;
+      if (!w || !h) return;
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+
+      const n = Math.min(760, Math.round(w * h / 3600));
+      for (let i = 0; i < n; i++) {
+        const x = Math.random() * w, y = Math.random() * h;
+        const tint = TINTS[(Math.random() * TINTS.length) | 0];
+        /* 대부분은 아주 작고 흐리게, 소수만 밝게 — 이 비율이 깊이를 만든다 */
+        const big = Math.random() < 0.06;
+        const r = big ? 0.9 + Math.random() * 1.1 : 0.25 + Math.random() * 0.65;
+        const a = big ? 0.55 + Math.random() * 0.45 : 0.12 + Math.random() * 0.42;
+
+        if (big) {
+          const g = ctx.createRadialGradient(x, y, 0, x, y, r * 7);
+          g.addColorStop(0, 'rgba(' + tint + ',' + (a * 0.5) + ')');
+          g.addColorStop(1, 'rgba(' + tint + ',0)');
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(x, y, r * 7, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.fillStyle = 'rgba(' + tint + ',' + a + ')';
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+
+      /* 가장 밝은 별 몇 개에만 회절 십자선 */
+      for (let i = 0; i < 7; i++) {
+        const x = Math.random() * w, y = Math.random() * h;
+        const len = 9 + Math.random() * 16;
+        const g = ctx.createLinearGradient(x - len, y, x + len, y);
+        g.addColorStop(0, 'rgba(220,230,255,0)');
+        g.addColorStop(0.5, 'rgba(220,230,255,0.5)');
+        g.addColorStop(1, 'rgba(220,230,255,0)');
+        ctx.strokeStyle = g; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x - len, y); ctx.lineTo(x + len, y); ctx.stroke();
+        const g2 = ctx.createLinearGradient(x, y - len, x, y + len);
+        g2.addColorStop(0, 'rgba(220,230,255,0)');
+        g2.addColorStop(0.5, 'rgba(220,230,255,0.5)');
+        g2.addColorStop(1, 'rgba(220,230,255,0)');
+        ctx.strokeStyle = g2;
+        ctx.beginPath(); ctx.moveTo(x, y - len); ctx.lineTo(x, y + len); ctx.stroke();
+      }
+    }
+
+    draw();
+    let rid;
+    addEventListener('resize', () => { clearTimeout(rid); rid = setTimeout(draw, 220); });
+
+    if (!reduceMotion) {
+      let pending = false;
+      addEventListener('scroll', () => {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(() => {
+          cv.style.transform = 'translate3d(0,' + (-scrollY * 0.035).toFixed(1) + 'px,0)';
+          pending = false;
+        });
+      }, { passive: true });
+    }
+    return { draw };
   })();
 
   /* ---------- FAB ---------- */
