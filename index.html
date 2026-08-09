@@ -386,6 +386,9 @@
   .card:hover::before, .card:focus-visible::before { opacity: 1; }
   .card:hover::after { opacity: 1; }
   .card:active { transform: translateY(-2px) scale(0.99); }
+  /* 열 수 있는 링크가 없는 카드는 클릭 가능한 척하지 않는다 */
+  .card.no-link { cursor: default; }
+  .card.no-link:active { transform: translateY(-5px); }
   .card.cat-pe { --cat-color: var(--pe); }
   .card.cat-guide { --cat-color: var(--guide); }
   .card.cat-tool { --cat-color: var(--tool); }
@@ -993,6 +996,10 @@
   const NEW_DAYS = 14 * 86400000;
   const isNew = p => p.created && (Date.now() - new Date(p.created + 'T00:00:00+09:00').getTime()) < NEW_DAYS;
 
+  /* 방문자가 실제로 열 수 있는 주소만 돌려준다.
+     비공개 저장소 주소는 소유자 외에는 GitHub 404이므로 링크로 쓰지 않는다. */
+  const openUrlOf = p => p.liveUrl || (p.isPrivate ? '' : p.githubUrl) || '';
+
   function syncUrl() {
     const u = new URLSearchParams();
     if (state.q) u.set('q', state.q);
@@ -1021,14 +1028,17 @@
   }
 
   function cardHtml(p, i) {
-    const url = p.liveUrl || p.githubUrl;
+    /* 비공개 저장소 링크는 본인 말고는 404만 보게 되므로 버튼을 내보내지 않는다 */
+    const showGh = !!p.githubUrl && !p.isPrivate;
+    const url = openUrlOf(p);
     const liveBtn = p.isLive && p.liveUrl
       ? `<a class="btn btn-live" href="${esc(p.liveUrl)}" target="_blank" rel="noopener" aria-label="${esc(p.title)} 라이브 열기">${ICONS.external}열기</a>`
       : `<span class="btn btn-disabled">준비 중</span>`;
-    const ghBtn = p.githubUrl
+    const ghBtn = showGh
       ? `<a class="btn btn-ghost" href="${esc(p.githubUrl)}" target="_blank" rel="noopener" aria-label="${esc(p.title)} GitHub 저장소">${ICONS.github}GitHub</a>`
       : '';
-    return `<article class="card cat-${p.category}" style="--i:${i % 18}" tabindex="0" role="link" data-url="${esc(url || '')}" aria-label="${esc(p.title)}">
+    const linkAttrs = url ? ` tabindex="0" role="link" data-url="${esc(url)}"` : ' data-url=""';
+    return `<article class="card cat-${p.category}${url ? '' : ' no-link'}" style="--i:${i % 18}"${linkAttrs} aria-label="${esc(p.title)}">
       <div class="card-top">
         <span class="chip"><span class="dot"></span>${CATS[p.category] || p.category}</span>
         ${isNew(p) ? '<span class="badge-new">NEW</span>' : ''}
@@ -1555,13 +1565,13 @@
       let html;
       if (n.kind === 'project') {
         const p = n.p;
-        const url = p.liveUrl || p.githubUrl;
+        const url = openUrlOf(p);
         html = '<div class="t-title">' + esc(p.title) + '</div>'
           + '<div class="t-meta"><span>' + esc(p.name) + '</span>'
           + (p.created ? '<span>· ' + fmtDate(p.created) + '</span>' : '')
           + (p.isLive ? '<span class="t-live">· LIVE</span>' : '') + '</div>'
           + '<div class="t-desc">' + esc(p.desc) + '</div>'
-          + '<div class="t-go">' + (url ? (canHover ? '클릭하면 새 탭에서 열립니다' : '한 번 더 누르면 열립니다') : '연결된 링크가 없습니다') + '</div>';
+          + '<div class="t-go">' + (url ? (canHover ? '클릭하면 새 탭에서 열립니다' : '한 번 더 누르면 열립니다') : '아직 배포되지 않았습니다') + '</div>';
       } else if (n.kind === 'cat') {
         html = '<div class="t-title">' + esc(n.label) + '</div>'
           + '<div class="t-meta"><span>' + counts[n.cat] + '개 프로젝트</span></div>'
@@ -1582,7 +1592,7 @@
     /* ---------- activate ---------- */
     function activate(n) {
       if (n.kind === 'project') {
-        const url = n.p.liveUrl || n.p.githubUrl;
+        const url = openUrlOf(n.p);
         if (url) window.open(url, '_blank', 'noopener');
         return;
       }
