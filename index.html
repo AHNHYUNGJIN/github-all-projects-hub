@@ -371,6 +371,135 @@
     cursor: default; pointer-events: none;
   }
 
+  /* ---------- View switch ---------- */
+  .view-switch {
+    display: inline-flex; gap: 3px; padding: 3px;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .view-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 13px; border-radius: 7px;
+    color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+    transition: color var(--dur-fast), background var(--dur-fast);
+  }
+  .view-btn svg { width: 15px; height: 15px; }
+  .view-btn:hover { color: var(--text-sub); }
+  .view-btn.active {
+    background: linear-gradient(120deg, rgba(99, 102, 241, 0.28), rgba(34, 211, 238, 0.18));
+    color: #EEF2FF;
+  }
+
+  /* ---------- Graph (map) view ---------- */
+  .graph-panel[hidden] { display: none !important; }
+  .projects-grid[hidden] { display: none !important; }
+  .empty-state[hidden] { display: none !important; }
+
+  .graph-panel { padding-bottom: 30px; }
+  .graph-wrap {
+    position: relative;
+    height: clamp(440px, 70vh, 760px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(900px 520px at 50% 42%, rgba(56, 189, 248, 0.07), transparent 70%),
+      radial-gradient(700px 460px at 18% 78%, rgba(167, 139, 250, 0.07), transparent 70%),
+      #080D19;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    touch-action: none;
+  }
+  .graph-wrap:fullscreen { height: 100%; border-radius: 0; }
+  .graph-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+  .graph-canvas.grabbing { cursor: grabbing; }
+  .graph-canvas.pointing { cursor: pointer; }
+  .graph-canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
+  .graph-tools {
+    position: absolute; top: 12px; right: 12px; z-index: 3;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .g-btn {
+    width: 34px; height: 34px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(15, 23, 42, 0.82);
+    border: 1px solid var(--border);
+    color: var(--text-sub);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: color var(--dur-fast), border-color var(--dur-fast), background var(--dur-fast);
+  }
+  .g-btn:hover { color: var(--text); border-color: var(--border-strong); background: rgba(30, 41, 59, 0.9); }
+  .g-btn:active { transform: scale(0.94); }
+  .g-btn svg { width: 16px; height: 16px; }
+
+  .graph-legend {
+    position: absolute; left: 12px; bottom: 12px; z-index: 3;
+    display: flex; flex-wrap: wrap; gap: 6px 12px;
+    padding: 9px 13px; max-width: calc(100% - 120px);
+    background: rgba(11, 17, 32, 0.78);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    font-size: 0.76rem; color: var(--text-sub);
+  }
+  .lg-item { display: inline-flex; align-items: center; gap: 6px; }
+  .lg-dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+  .lg-dot.pe { background: var(--pe); color: var(--pe); }
+  .lg-dot.guide { background: var(--guide); color: var(--guide); }
+  .lg-dot.tool { background: var(--tool); color: var(--tool); }
+  .lg-dot.hub { background: var(--accent-2); color: var(--accent-2); }
+  .lg-ring { width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--live); }
+
+  .graph-hint {
+    position: absolute; left: 14px; top: 12px; z-index: 3;
+    display: flex; flex-wrap: wrap; gap: 4px 10px; max-width: calc(100% - 70px);
+    color: var(--text-muted); font-size: 0.76rem;
+    text-shadow: 0 1px 6px rgba(2, 6, 23, 0.9);
+    pointer-events: none;
+  }
+  .graph-hint kbd {
+    padding: 1px 6px; border-radius: 5px; border: 1px solid var(--border);
+    font-family: ui-monospace, monospace; font-size: 0.7rem; color: var(--text-sub);
+  }
+
+  .graph-tip {
+    position: absolute; z-index: 4; max-width: 280px;
+    padding: 11px 13px;
+    background: rgba(15, 23, 42, 0.96);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px -16px rgba(2, 6, 23, 0.95);
+    pointer-events: none;
+    opacity: 0; transform: translateY(4px);
+    transition: opacity var(--dur-fast), transform var(--dur-fast);
+  }
+  .graph-tip.show { opacity: 1; transform: translateY(0); }
+  .graph-tip[hidden] { display: none !important; }
+  .graph-tip .t-title { font-size: 0.9rem; font-weight: 700; color: var(--text); line-height: 1.35; }
+  .graph-tip .t-meta {
+    display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+    margin-top: 5px; font-size: 0.73rem; color: var(--text-muted);
+    font-family: ui-monospace, monospace;
+  }
+  .graph-tip .t-desc {
+    margin-top: 7px; font-size: 0.78rem; color: var(--text-sub); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .graph-tip .t-go {
+    margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--border);
+    font-size: 0.73rem; font-weight: 600; color: var(--accent);
+  }
+  .graph-tip .t-live { color: var(--live); }
+
+  @media (max-width: 560px) {
+    .view-switch { flex: 1 1 auto; }
+    .view-btn { flex: 1; justify-content: center; }
+    .graph-wrap { height: clamp(400px, 62vh, 560px); }
+    .graph-legend { max-width: calc(100% - 62px); font-size: 0.71rem; padding: 7px 10px; }
+    .graph-hint { display: none; }
+  }
+
   /* ---------- Empty state ---------- */
   .empty-state {
     display: none; text-align: center;
@@ -493,6 +622,16 @@
         <option value="name">이름순</option>
         <option value="live">라이브 우선</option>
       </select>
+      <div class="view-switch" id="viewSwitch" role="group" aria-label="보기 방식">
+        <button type="button" class="view-btn active" data-view="cards" aria-pressed="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          카드
+        </button>
+        <button type="button" class="view-btn" data-view="map" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.6"/><circle cx="5" cy="6" r="2.2"/><circle cx="19.5" cy="7" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18.5" cy="17.5" r="2.2"/><path d="m10 10.4-3.3-2.9M14.2 10.7l3.6-2.2M10.3 13.6l-2.8 3.2M14 13.7l3 2.5"/></svg>
+          맵
+        </button>
+      </div>
     </div>
     <div class="filter-tabs" id="filterTabs" role="group" aria-label="카테고리 필터">
       <button class="tab-btn active" data-filter="all" aria-pressed="true">
@@ -521,6 +660,48 @@
   <p class="result-line" id="resultLine" role="status" aria-live="polite"></p>
 
   <div class="projects-grid" id="projectsGrid"></div>
+
+  <div class="graph-panel" id="graphPanel" hidden>
+    <div class="graph-wrap" id="graphWrap">
+      <canvas class="graph-canvas" id="graphCanvas" tabindex="0" role="application"
+              aria-label="프로젝트 관계 맵. 노드를 클릭하면 해당 도구가 새 탭에서 열립니다. 카드 보기로 전환하면 같은 목록을 표 형태로 볼 수 있습니다."></canvas>
+
+      <p class="graph-hint">
+        <span>드래그로 이동 · 휠로 확대</span>
+        <span>노드 클릭 → 도구 열기</span>
+        <span>카테고리 클릭 → 접기/펼치기</span>
+        <span><kbd>F</kbd> 맞춤 · <kbd>R</kbd> 재배치</span>
+      </p>
+
+      <div class="graph-tools">
+        <button type="button" class="g-btn" id="gZoomIn" aria-label="확대" title="확대">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button type="button" class="g-btn" id="gZoomOut" aria-label="축소" title="축소">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
+        </button>
+        <button type="button" class="g-btn" id="gFit" aria-label="화면에 맞추기" title="화면에 맞추기 (F)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>
+        </button>
+        <button type="button" class="g-btn" id="gShuffle" aria-label="다시 배치" title="다시 배치 (R)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        </button>
+        <button type="button" class="g-btn" id="gFull" aria-label="전체 화면" title="전체 화면">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>
+        </button>
+      </div>
+
+      <div class="graph-legend">
+        <span class="lg-item"><span class="lg-dot hub"></span>허브 · 카테고리</span>
+        <span class="lg-item"><span class="lg-dot pe"></span>체육 &amp; 스포츠</span>
+        <span class="lg-item"><span class="lg-dot guide"></span>AI &amp; 가이드</span>
+        <span class="lg-item"><span class="lg-dot tool"></span>툴 &amp; 유틸리티</span>
+        <span class="lg-item"><span class="lg-ring"></span>라이브 배포</span>
+      </div>
+
+      <div class="graph-tip" id="graphTip" hidden></div>
+    </div>
+  </div>
 
   <div class="empty-state" id="emptyState">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/></svg>
@@ -659,10 +840,12 @@
   const state = {
     q: params.get('q') || '',
     cat: params.get('cat') || 'all',
-    sort: params.get('sort') || 'recent'
+    sort: params.get('sort') || 'recent',
+    view: params.get('view') || 'cards'
   };
   if (!['all', 'live', 'pe', 'guide', 'tool'].includes(state.cat)) state.cat = 'all';
   if (!['recent', 'name', 'live'].includes(state.sort)) state.sort = 'recent';
+  if (!['cards', 'map'].includes(state.view)) state.view = 'cards';
 
   const grid = document.getElementById('projectsGrid');
   const searchInput = document.getElementById('searchInput');
@@ -671,7 +854,9 @@
   const sortSelect = document.getElementById('sortSelect');
   const resultLine = document.getElementById('resultLine');
   const emptyState = document.getElementById('emptyState');
+  const graphPanel = document.getElementById('graphPanel');
   const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+  const viewBtns = Array.from(document.querySelectorAll('.view-btn'));
 
   const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fmtDate = d => d ? d.replaceAll('-', '.') : '';
@@ -683,6 +868,7 @@
     if (state.q) u.set('q', state.q);
     if (state.cat !== 'all') u.set('cat', state.cat);
     if (state.sort !== 'recent') u.set('sort', state.sort);
+    if (state.view !== 'cards') u.set('view', state.view);
     const qs = u.toString();
     history.replaceState(null, '', qs ? '?' + qs : location.pathname);
   }
@@ -731,10 +917,25 @@
 
   function render() {
     const list = sortList(projects.filter(matches));
-    grid.innerHTML = list.map(cardHtml).join('');
-    emptyState.classList.toggle('show', list.length === 0);
+    const isMap = state.view === 'map';
     const label = state.cat === 'all' ? '전체' : state.cat === 'live' ? '라이브' : CATS[state.cat];
-    resultLine.innerHTML = `<strong>${list.length}</strong>개 프로젝트 <span>· ${esc(label)}${state.q ? ` · &quot;${esc(state.q)}&quot; 검색` : ''}</span>`;
+    const filtered = state.cat !== 'all' || !!state.q;
+
+    grid.hidden = isMap;
+    graphPanel.hidden = !isMap;
+    emptyState.hidden = isMap;
+
+    if (isMap) {
+      resultLine.innerHTML = filtered
+        ? `<strong>${list.length}</strong>개 강조 표시 <span>· ${esc(label)}${state.q ? ` · &quot;${esc(state.q)}&quot; 검색` : ''} · 맵에는 전체 ${projects.length}개가 그려집니다</span>`
+        : `<strong>${projects.length}</strong>개 프로젝트 <span>· 관계 맵</span>`;
+      Graph.show(new Set(list.map(p => p.name)), filtered);
+    } else {
+      Graph.hide();
+      grid.innerHTML = list.map(cardHtml).join('');
+      emptyState.classList.toggle('show', list.length === 0);
+      resultLine.innerHTML = `<strong>${list.length}</strong>개 프로젝트 <span>· ${esc(label)}${state.q ? ` · &quot;${esc(state.q)}&quot; 검색` : ''}</span>`;
+    }
     syncUrl();
   }
 
@@ -822,6 +1023,573 @@
     }
   });
 
+  viewBtns.forEach(btn => btn.addEventListener('click', () => {
+    state.view = btn.dataset.view;
+    viewBtns.forEach(b => {
+      const on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on);
+    });
+    render();
+  }));
+
+  /* ---------- Graph (map) view ---------- */
+  const Graph = (function () {
+    const wrap = document.getElementById('graphWrap');
+    const cv = document.getElementById('graphCanvas');
+    const tip = document.getElementById('graphTip');
+    const ctx = cv.getContext('2d');
+    const canHover = matchMedia('(hover: hover)').matches;
+
+    const COLOR = { pe: '#FB923C', guide: '#A78BFA', tool: '#38BDF8', hub: '#22D3EE', live: '#4ADE80' };
+    const DIM = 0.14;
+
+    /* 주제 태그 — 카테고리를 가로지르는 연관선을 만든다 */
+    const TAGS = [
+      ['연수', /연수|가이드|매뉴얼|슬라이드|실습|100제|50제|15가지|학습장|배움터|커리큘럼/],
+      ['AI', /\bAI\b|Gemini|Claude|NotebookLM|GPT|프롬프트|생성형|나노바나나/],
+      ['게임', /게임|퍼즐|대전|보드|윷|체스|바둑|오목|매치|아케이드|스테이지|퀘스트/],
+      ['측정', /타이머|스톱워치|측정|속도|기록|랩타임|전광판|점수/],
+      ['평가', /평가|성취기준|교육과정|세특|지도안|수업 설계|설계|계획|루브릭|급수/],
+      ['미디어', /영상|비디오|유튜브|카메라|사진|QR|포토|이미지|오디오/],
+      ['모션', /모션|동작|인식|자세|MoveNet/],
+      ['학습앱', /초등|영어|수학|한글|단어|플래시카드|스테이지|학습 앱/],
+      ['데이터', /\bDB\b|데이터|자료실|수집|크롤|검색|목록|아카이브/],
+      ['배포', /GitHub|Vercel|Netlify|배포|깃허브|Apps Script|코딩/],
+      ['문서', /워드|엑셀|한글|HWPX|PDF|문서|통지문|변환|시트/]
+    ];
+
+    let nodes = [], links = [], byId = new Map();
+    let W = 0, H = 0, k = 1, tx = 0, ty = 0;
+    let alpha = 0, raf = 0, active = false, built = false;
+    let hover = null, picked = null, dragNode = null, panning = false;
+    let downAt = null, moved = false, lastPtr = { x: 0, y: 0 };
+    let highlight = null, filtering = false, positioned = false;
+    const collapsed = new Set();
+    const ptrs = new Map();
+    let pinch = null;
+
+    /* ---------- build ---------- */
+    function tagsOf(p) {
+      const hay = p.name + ' ' + p.title + ' ' + p.desc;
+      return TAGS.filter(([, re]) => re.test(hay)).map(([t]) => t);
+    }
+
+    function build() {
+      nodes = []; links = []; byId = new Map();
+      const add = n => { nodes.push(n); byId.set(n.id, n); return n; };
+
+      const root = add({
+        id: 'root', kind: 'root', label: '마스터 허브', sub: projects.length + '개 프로젝트',
+        r: 26, charge: 3.2, x: 0, y: 0, vx: 0, vy: 0, deg: 0
+      });
+
+      const catKeys = Object.keys(CATS);
+      catKeys.forEach((c, i) => {
+        const a = (i / catKeys.length) * Math.PI * 2 - Math.PI / 2;
+        const n = add({
+          id: 'cat:' + c, kind: 'cat', cat: c, label: CATS[c], sub: counts[c] + '개',
+          r: 17, charge: 2.4, x: Math.cos(a) * 230, y: Math.sin(a) * 230, vx: 0, vy: 0, deg: 0
+        });
+        links.push({ s: root, t: n, len: 240, k: 0.045, kind: 'trunk' });
+      });
+
+      projects.forEach((p, i) => {
+        const parent = byId.get('cat:' + p.category) || root;
+        const a = (i / projects.length) * Math.PI * 2;
+        const n = add({
+          id: 'p:' + p.name, kind: 'project', p: p, cat: p.category, label: p.title,
+          r: p.isLive ? 8 : 6, charge: 1, deg: 0,
+          x: parent.x + Math.cos(a) * (90 + (i % 7) * 16),
+          y: parent.y + Math.sin(a) * (90 + (i % 5) * 18),
+          vx: 0, vy: 0, tags: tagsOf(p), parent: parent
+        });
+        links.push({ s: parent, t: n, len: 118, k: 0.035, kind: 'branch' });
+      });
+
+      /* 태그가 겹치는 프로젝트끼리 최대 2개씩 연관선 */
+      const pn = nodes.filter(n => n.kind === 'project');
+      const seen = new Set();
+      pn.forEach(a => {
+        const scored = [];
+        pn.forEach(b => {
+          if (a === b) return;
+          const shared = a.tags.filter(t => b.tags.includes(t)).length;
+          if (shared >= 2) scored.push({ b: b, shared: shared });
+        });
+        scored.sort((m, n2) => n2.shared - m.shared || m.b.label.localeCompare(n2.b.label, 'ko'));
+        scored.slice(0, 2).forEach(o => {
+          const b = o.b;
+          const key = a.id < b.id ? a.id + '|' + b.id : b.id + '|' + a.id;
+          if (seen.has(key)) return;
+          seen.add(key);
+          links.push({ s: a, t: b, len: 165, k: 0.012, kind: 'rel' });
+        });
+      });
+
+      links.forEach(l => { l.s.deg++; l.t.deg++; });
+      nodes.forEach(n => {
+        if (n.kind === 'project') n.r = Math.min(13, n.r + Math.max(0, n.deg - 1) * 0.9);
+        n.nb = new Set();
+      });
+      links.forEach(l => { l.s.nb.add(l.t.id); l.t.nb.add(l.s.id); });
+      built = true;
+    }
+
+    const visible = n => n.kind !== 'project' || !collapsed.has(n.cat);
+    const linkVisible = l => visible(l.s) && visible(l.t);
+
+    /* ---------- physics ---------- */
+    const REP = 5200, CUT2 = 420 * 420, DAMP = 0.82, VMAX = 9;
+
+    function step() {
+      const ns = nodes.filter(visible);
+      for (let i = 0; i < ns.length; i++) {
+        const a = ns[i];
+        for (let j = i + 1; j < ns.length; j++) {
+          const b = ns[j];
+          let dx = b.x - a.x, dy = b.y - a.y, d2 = dx * dx + dy * dy;
+          if (d2 === 0) { dx = (i - j) * 0.01 + 0.01; dy = 0.01; d2 = dx * dx + dy * dy; }
+          else if (d2 > CUT2) continue;
+          const d = Math.sqrt(d2);
+          const minSep = a.r + b.r + 8;
+          let f = (REP * a.charge * b.charge) / d2 * alpha;
+          if (d < minSep) f += (minSep - d) * 0.5;
+          const fx = dx / d * f, fy = dy / d * f;
+          a.vx -= fx; a.vy -= fy; b.vx += fx; b.vy += fy;
+        }
+      }
+      for (const l of links) {
+        if (!linkVisible(l)) continue;
+        const dx = l.t.x - l.s.x, dy = l.t.y - l.s.y;
+        const d = Math.hypot(dx, dy) || 0.01;
+        const f = (d - l.len) * l.k * alpha;
+        const fx = dx / d * f, fy = dy / d * f;
+        l.s.vx += fx; l.s.vy += fy; l.t.vx -= fx; l.t.vy -= fy;
+      }
+      for (const n of ns) {
+        if (n === dragNode) { n.vx = n.vy = 0; continue; }
+        /* 가로로 넓고 세로로 낮은 타원 배치 — 가로로 긴 패널을 알차게 채운다 */
+        const g = n.kind === 'root' ? 0.05 : 0.0016;
+        n.vx -= n.x * g * 0.55 * alpha; n.vy -= n.y * g * 1.75 * alpha;
+        n.vx *= DAMP; n.vy *= DAMP;
+        const sp = Math.hypot(n.vx, n.vy);
+        if (sp > VMAX) { n.vx = n.vx / sp * VMAX; n.vy = n.vy / sp * VMAX; }
+        n.x += n.vx; n.y += n.vy;
+      }
+      alpha *= 0.982;
+      if (alpha < 0.02) alpha = 0;
+    }
+
+    /* ---------- draw ---------- */
+    const toScreen = n => ({ x: n.x * k + tx, y: n.y * k + ty });
+    const toWorld = (sx, sy) => ({ x: (sx - tx) / k, y: (sy - ty) / k });
+
+    function nodeAlpha(n) {
+      let a = 1;
+      if (filtering && highlight && n.kind === 'project' && !highlight.has(n.p.name)) a = DIM;
+      const focus = hover || picked;
+      if (focus && n !== focus && !focus.nb.has(n.id)) a = Math.min(a, DIM + 0.06);
+      return a;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.save();
+      ctx.translate(tx, ty); ctx.scale(k, k);
+
+      const focus = hover || picked;
+      for (const l of links) {
+        if (!linkVisible(l)) continue;
+        const on = focus && (l.s === focus || l.t === focus);
+        let a = Math.min(nodeAlpha(l.s), nodeAlpha(l.t));
+        if (focus && !on) a = Math.min(a, 0.1);
+        ctx.globalAlpha = a * (l.kind === 'rel' ? 0.5 : 0.9);
+        ctx.strokeStyle = on ? COLOR.hub : (l.kind === 'rel' ? 'rgba(148,163,184,0.32)' : 'rgba(148,163,184,0.5)');
+        ctx.lineWidth = (on ? 1.8 : l.kind === 'trunk' ? 1.5 : l.kind === 'branch' ? 0.9 : 0.6) / k;
+        ctx.beginPath();
+        ctx.moveTo(l.s.x, l.s.y);
+        ctx.lineTo(l.t.x, l.t.y);
+        ctx.stroke();
+      }
+
+      for (const n of nodes) {
+        if (!visible(n)) continue;
+        const a = nodeAlpha(n);
+        const col = n.kind === 'root' ? COLOR.hub : COLOR[n.cat];
+        const isFocus = n === focus;
+        ctx.globalAlpha = a;
+
+        if (a > 0.5) {
+          ctx.shadowColor = col;
+          ctx.shadowBlur = (isFocus ? 26 : n.kind === 'project' ? 10 : 18) / Math.max(k, 0.6);
+        }
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + (isFocus ? 2.5 : 0), 0, Math.PI * 2);
+        ctx.fillStyle = n.kind === 'project' && !n.p.isLive ? 'rgba(100,116,139,0.9)' : col;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        /* 라이브 링은 충분히 확대됐을 때만 — 축소 상태에선 링이 점을 덮어 색이 안 보인다 */
+        if (n.kind === 'project' && n.p.isLive && k >= 0.5) {
+          ctx.strokeStyle = COLOR.live;
+          ctx.lineWidth = 1.6 / k;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r + 3.5, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        if (n.kind === 'cat') {
+          ctx.strokeStyle = 'rgba(226,232,240,0.9)';
+          ctx.lineWidth = 2 / k;
+          const s = 6;
+          ctx.beginPath();
+          ctx.moveTo(n.x - s, n.y); ctx.lineTo(n.x + s, n.y);
+          if (collapsed.has(n.cat)) { ctx.moveTo(n.x, n.y - s); ctx.lineTo(n.x, n.y + s); }
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+
+      /* 라벨은 화면 좌표에 그린다. 겹치면 중요한 노드부터 자리를 차지하고
+         나머지는 생략 — 줌아웃해도 읽을 수 있는 만큼은 항상 보인다. */
+      ctx.globalAlpha = 1;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      /* 노드 원도 미리 자리를 차지시켜 라벨이 다른 노드를 덮지 않게 한다 */
+      const placed = [];
+      for (const n of nodes) {
+        if (!visible(n)) continue;
+        const s = toScreen(n), rr = n.r * k + 2;
+        placed.push({ x: s.x - rr, y: s.y - rr, w: rr * 2, h: rr * 2 });
+      }
+      const overlaps = r => placed.some(q => r.x < q.x + q.w && r.x + r.w > q.x && r.y < q.y + q.h && r.y + r.h > q.y);
+
+      for (const n of labelOrder()) {
+        if (!visible(n)) continue;
+        const isFocus = n === focus;
+        const a = nodeAlpha(n);
+        if (a < 0.3 && !isFocus) continue;
+        const s = toScreen(n);
+        if (s.x < -140 || s.x > W + 140 || s.y < -40 || s.y > H + 40) continue;
+
+        const fs = n.kind === 'root' ? 14 : n.kind === 'cat' ? 12.5 : Math.max(9.5, Math.min(13, 10 * Math.pow(k, 0.4)));
+        ctx.font = (n.kind === 'project' ? 600 : 700) + ' ' + fs + 'px "Pretendard Variable", Pretendard, system-ui, sans-serif';
+        const max = n.kind === 'project' ? 16 : 24;
+        const text = n.label.length > max ? n.label.slice(0, max - 1) + '…' : n.label;
+        const tw = ctx.measureText(text).width;
+        const th = fs + (n.sub ? fs + 3 : 0) + 5;
+        /* 겹치면 우선순위 낮은 라벨은 그리지 않는다 — 겹쳐 뭉개는 것보다 낫다 */
+        const must = n.kind !== 'project' || isFocus;
+
+        /* 아래가 막히면 위쪽에 놓아 본다 */
+        const mkBox = yy => ({ x: s.x - tw / 2 - 4, y: yy - 2, w: tw + 8, h: th });
+        const below = s.y + n.r * k + 6, above = s.y - n.r * k - 4 - th;
+        let y = null;
+        for (const cand of [below, above]) { if (!overlaps(mkBox(cand))) { y = cand; break; } }
+        if (y === null) { if (!must) continue; y = below; }
+        placed.push(mkBox(y));
+
+        ctx.globalAlpha = a;
+        ctx.lineWidth = 3.2;
+        ctx.strokeStyle = 'rgba(8,13,25,0.92)';
+        ctx.strokeText(text, s.x, y);
+        ctx.fillStyle = isFocus ? '#F1F5F9' : n.kind === 'project' ? '#CBD5E1' : '#E2E8F0';
+        ctx.fillText(text, s.x, y);
+        if (n.sub) {
+          ctx.font = '600 ' + (fs - 2.5) + 'px "Pretendard Variable", Pretendard, system-ui, sans-serif';
+          ctx.strokeText(n.sub, s.x, y + fs + 3);
+          ctx.fillStyle = '#64748B';
+          ctx.fillText(n.sub, s.x, y + fs + 3);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    /* 라벨 자리싸움 우선순위: 포커스 > 허브 > 카테고리 > 검색 강조 > 이웃 > 라이브 > 연결 많은 순 */
+    function labelOrder() {
+      const focus = hover || picked;
+      const prio = n => {
+        if (n === focus) return 1000;
+        if (n.kind === 'root') return 900;
+        if (n.kind === 'cat') return 800;
+        if (filtering && highlight && highlight.has(n.p.name)) return 700;
+        if (focus && focus.nb.has(n.id)) return 600;
+        return (n.p && n.p.isLive ? 100 : 0) + n.deg;
+      };
+      return nodes.slice().sort((a, b) => prio(b) - prio(a) || b.r - a.r || (a.label < b.label ? -1 : 1));
+    }
+
+    /* ---------- loop ---------- */
+    let dirty = true, autoFit = false, ticks = 0;
+    const kick = a => { alpha = Math.max(alpha, a); dirty = true; };
+    function loop() {
+      raf = 0;
+      if (!active) return;
+      if (alpha > 0) { step(); dirty = true; }
+      /* 자리를 잡는 동안 카메라가 전체를 계속 담아 준다 */
+      if (autoFit) {
+        if (++ticks % 8 === 0) fit();
+        if (alpha === 0) { fit(); autoFit = false; }
+      }
+      if (dirty) { draw(); dirty = false; raf = requestAnimationFrame(loop); return; }
+      if (alpha > 0) raf = requestAnimationFrame(loop);
+    }
+    function run() { if (active && !raf) raf = requestAnimationFrame(loop); }
+    const stopAutoFit = () => { autoFit = false; };
+
+    /* ---------- view helpers ---------- */
+    function resize() {
+      const r = wrap.getBoundingClientRect();
+      W = Math.max(1, r.width); H = Math.max(1, r.height);
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!positioned) { tx = W / 2; ty = H / 2; positioned = true; }
+      dirty = true; run();
+    }
+
+    function fit(pad) {
+      const ns = nodes.filter(visible);
+      if (!ns.length || !W) return;
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (const n of ns) {
+        x0 = Math.min(x0, n.x - n.r); y0 = Math.min(y0, n.y - n.r);
+        x1 = Math.max(x1, n.x + n.r); y1 = Math.max(y1, n.y + n.r);
+      }
+      const m = pad === undefined ? 56 : pad;
+      k = Math.max(0.2, Math.min(1.6, Math.min((W - m * 2) / (x1 - x0 || 1), (H - m * 2) / (y1 - y0 || 1))));
+      tx = W / 2 - ((x0 + x1) / 2) * k;
+      ty = H / 2 - ((y0 + y1) / 2) * k;
+      dirty = true;
+    }
+
+    function zoomAt(sx, sy, factor) {
+      stopAutoFit();
+      const nk = Math.max(0.2, Math.min(4, k * factor));
+      if (nk === k) return;
+      tx = sx - (sx - tx) * (nk / k);
+      ty = sy - (sy - ty) * (nk / k);
+      k = nk; dirty = true; run();
+    }
+
+    function pick(sx, sy) {
+      const w = toWorld(sx, sy);
+      let best = null, bd = Infinity;
+      for (const n of nodes) {
+        if (!visible(n)) continue;
+        const d = Math.hypot(n.x - w.x, n.y - w.y);
+        const hit = n.r + 10 / k;
+        if (d < hit && d < bd) { best = n; bd = d; }
+      }
+      return best;
+    }
+
+    /* ---------- tooltip ---------- */
+    function showTip(n, sx, sy) {
+      if (!n) { tip.hidden = true; tip.classList.remove('show'); return; }
+      let html;
+      if (n.kind === 'project') {
+        const p = n.p;
+        const url = p.liveUrl || p.githubUrl;
+        html = '<div class="t-title">' + esc(p.title) + '</div>'
+          + '<div class="t-meta"><span>' + esc(p.name) + '</span>'
+          + (p.created ? '<span>· ' + fmtDate(p.created) + '</span>' : '')
+          + (p.isLive ? '<span class="t-live">· LIVE</span>' : '') + '</div>'
+          + '<div class="t-desc">' + esc(p.desc) + '</div>'
+          + '<div class="t-go">' + (url ? (canHover ? '클릭하면 새 탭에서 열립니다' : '한 번 더 누르면 열립니다') : '연결된 링크가 없습니다') + '</div>';
+      } else if (n.kind === 'cat') {
+        html = '<div class="t-title">' + esc(n.label) + '</div>'
+          + '<div class="t-meta"><span>' + counts[n.cat] + '개 프로젝트</span></div>'
+          + '<div class="t-go">클릭하면 ' + (collapsed.has(n.cat) ? '펼칩니다' : '접습니다') + '</div>';
+      } else {
+        html = '<div class="t-title">마스터 허브</div>'
+          + '<div class="t-meta"><span>' + projects.length + '개 프로젝트 · ' + counts.live + '개 라이브</span></div>'
+          + '<div class="t-go">클릭하면 전체를 펼치거나 접습니다</div>';
+      }
+      tip.innerHTML = html;
+      tip.hidden = false;
+      tip.classList.add('show');
+      const w = tip.offsetWidth, h = tip.offsetHeight;
+      tip.style.left = Math.max(8, Math.min(W - w - 8, sx + 16)) + 'px';
+      tip.style.top = Math.max(8, Math.min(H - h - 8, sy + 16)) + 'px';
+    }
+
+    /* ---------- activate ---------- */
+    function activate(n) {
+      if (n.kind === 'project') {
+        const url = n.p.liveUrl || n.p.githubUrl;
+        if (url) window.open(url, '_blank', 'noopener');
+        return;
+      }
+      if (n.kind === 'cat') {
+        if (collapsed.has(n.cat)) collapsed.delete(n.cat); else collapsed.add(n.cat);
+      } else {
+        const allIn = Object.keys(CATS).every(c => collapsed.has(c));
+        if (allIn) collapsed.clear();
+        else Object.keys(CATS).forEach(c => collapsed.add(c));
+      }
+      picked = null;
+      showTip(null);
+      autoFit = true; ticks = 0;
+      kick(0.7); run();
+    }
+
+    /* ---------- events ---------- */
+    cv.addEventListener('pointerdown', e => {
+      try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+      const r = cv.getBoundingClientRect();
+      const sx = e.clientX - r.left, sy = e.clientY - r.top;
+      stopAutoFit();
+      ptrs.set(e.pointerId, { x: sx, y: sy });
+      if (ptrs.size === 2) {
+        const [a, b] = [...ptrs.values()];
+        pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 };
+        dragNode = null; panning = false; moved = true;
+        cv.classList.remove('grabbing');
+        return;
+      }
+      downAt = { x: sx, y: sy }; moved = false; lastPtr = { x: sx, y: sy };
+      const n = pick(sx, sy);
+      if (n) { dragNode = n; kick(0.35); }
+      else { panning = true; cv.classList.add('grabbing'); }
+    });
+
+    cv.addEventListener('pointermove', e => {
+      const r = cv.getBoundingClientRect();
+      const sx = e.clientX - r.left, sy = e.clientY - r.top;
+      if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, { x: sx, y: sy });
+      if (downAt && (Math.abs(sx - downAt.x) > 4 || Math.abs(sy - downAt.y) > 4)) moved = true;
+
+      if (pinch && ptrs.size >= 2) {
+        const [a, b] = [...ptrs.values()];
+        const d = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+        const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+        tx += mx - pinch.mx; ty += my - pinch.my;
+        zoomAt(mx, my, d / pinch.d);
+        pinch = { d: d, mx: mx, my: my };
+        return;
+      }
+
+      if (dragNode) {
+        const w = toWorld(sx, sy);
+        dragNode.x = w.x; dragNode.y = w.y; dragNode.vx = dragNode.vy = 0;
+        kick(0.3); run();
+      } else if (panning) {
+        tx += sx - lastPtr.x; ty += sy - lastPtr.y;
+        dirty = true; run();
+      } else if (canHover) {
+        const n = pick(sx, sy);
+        cv.classList.toggle('pointing', !!n);
+        if (n !== hover) { hover = n; dirty = true; run(); }
+        if (n) showTip(n, sx, sy); else showTip(null);
+      }
+      lastPtr = { x: sx, y: sy };
+    });
+
+    function endPointer(e) {
+      ptrs.delete(e.pointerId);
+      if (ptrs.size < 2) pinch = null;
+      const r = cv.getBoundingClientRect();
+      const sx = e.clientX - r.left, sy = e.clientY - r.top;
+      const wasDrag = dragNode;
+      dragNode = null; panning = false;
+      cv.classList.remove('grabbing');
+      if (!moved && downAt) {
+        const n = pick(sx, sy);
+        if (n) {
+          if (canHover || picked === n) { activate(n); picked = null; }
+          else { picked = n; showTip(n, sx, sy); dirty = true; }
+        } else { picked = null; showTip(null); dirty = true; }
+        run();
+      } else if (wasDrag) { kick(0.2); run(); }
+      downAt = null; moved = false;
+    }
+    cv.addEventListener('pointerup', endPointer);
+    cv.addEventListener('pointercancel', e => {
+      ptrs.delete(e.pointerId);
+      if (ptrs.size < 2) pinch = null;
+      dragNode = null; panning = false; downAt = null;
+      cv.classList.remove('grabbing');
+    });
+    cv.addEventListener('pointerleave', () => {
+      if (!dragNode && !panning) { hover = null; showTip(null); dirty = true; run(); }
+    });
+
+    cv.addEventListener('wheel', e => {
+      e.preventDefault();
+      const r = cv.getBoundingClientRect();
+      zoomAt(e.clientX - r.left, e.clientY - r.top, Math.exp(-e.deltaY * 0.0016));
+    }, { passive: false });
+
+    cv.addEventListener('keydown', e => {
+      const pan = e.shiftKey ? 90 : 36;
+      const map = { ArrowLeft: [pan, 0], ArrowRight: [-pan, 0], ArrowUp: [0, pan], ArrowDown: [0, -pan] };
+      if (map[e.key]) { e.preventDefault(); stopAutoFit(); tx += map[e.key][0]; ty += map[e.key][1]; dirty = true; run(); return; }
+      if (e.key === '+' || e.key === '=') { e.preventDefault(); zoomAt(W / 2, H / 2, 1.25); }
+      else if (e.key === '-' || e.key === '_') { e.preventDefault(); zoomAt(W / 2, H / 2, 0.8); }
+      else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); stopAutoFit(); fit(); run(); }
+      else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); shuffle(); }
+      else if (e.key === 'Escape') { picked = null; showTip(null); dirty = true; run(); }
+    });
+
+    function shuffle() {
+      nodes.forEach(n => {
+        if (n.kind === 'root') { n.x = n.y = 0; }
+        else if (n.kind === 'cat') {
+          const a = Math.random() * Math.PI * 2;
+          n.x = Math.cos(a) * 230; n.y = Math.sin(a) * 230;
+        } else {
+          const a = Math.random() * Math.PI * 2;
+          const d = 90 + Math.random() * 150;
+          n.x = n.parent.x + Math.cos(a) * d;
+          n.y = n.parent.y + Math.sin(a) * d;
+        }
+        n.vx = n.vy = 0;
+      });
+      collapsed.clear();
+      picked = null; hover = null; showTip(null);
+      autoFit = true; ticks = 0;
+      kick(1); run();
+    }
+
+    document.getElementById('gZoomIn').addEventListener('click', () => zoomAt(W / 2, H / 2, 1.3));
+    document.getElementById('gZoomOut').addEventListener('click', () => zoomAt(W / 2, H / 2, 0.77));
+    document.getElementById('gFit').addEventListener('click', () => { stopAutoFit(); fit(); run(); });
+    document.getElementById('gShuffle').addEventListener('click', shuffle);
+    document.getElementById('gFull').addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (wrap.requestFullscreen) wrap.requestFullscreen().catch(() => {});
+    });
+
+    if (window.ResizeObserver) new ResizeObserver(() => { if (active) resize(); }).observe(wrap);
+    else addEventListener('resize', () => { if (active) resize(); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && active) { dirty = true; run(); } });
+
+    return {
+      show: function (matchNames, isFiltering) {
+        highlight = matchNames; filtering = isFiltering;
+        const first = !built;
+        if (first) build();
+        active = true;
+        resize();
+        if (first) {
+          if (reduceMotion) {
+            alpha = 1;
+            for (let i = 0; i < 320; i++) { step(); alpha = Math.max(alpha, 0.35); }
+            alpha = 0; fit(); dirty = true; run();
+          } else {
+            alpha = 1; autoFit = true; ticks = 0; run();
+          }
+        } else { dirty = true; run(); }
+      },
+      hide: function () {
+        active = false; hover = null; picked = null;
+        showTip(null);
+        if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      }
+    };
+  })();
+
   /* ---------- FAB ---------- */
   const fab = document.getElementById('fabTop');
   let ticking = false;
@@ -841,6 +1609,13 @@
   if (state.cat !== 'all') {
     tabs.forEach(b => {
       const on = b.dataset.filter === state.cat;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on);
+    });
+  }
+  if (state.view !== 'cards') {
+    viewBtns.forEach(b => {
+      const on = b.dataset.view === state.view;
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', on);
     });
