@@ -827,13 +827,13 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
         </button>
         <button type="button" class="g-btn" id="gFit" aria-label="화면에 맞추기" title="화면에 맞추기 (F)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><circle cx="12" cy="12" r="2.6"/></svg>
         </button>
         <button type="button" class="g-btn" id="gShuffle" aria-label="다시 배치" title="다시 배치 (R)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
         </button>
         <button type="button" class="g-btn" id="gFull" aria-label="전체 화면" title="전체 화면">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M21 3l-7 7M9 21H3v-6M3 21l7-7"/></svg>
         </button>
       </div>
 
@@ -965,6 +965,7 @@
     {"name":"teaching-atelier","title":"티칭 아틀리에 — 수업 설계~세특 스튜디오","desc":"전 교과(중·고) 교사용 올인원 웹앱 — 성취기준 9,126건 탐색, 수업 설계, 관찰 기록 보드, 세특 생성·규칙 검사(NEIS 바이트·기재 불가 항목), 평가계획 HWPX 내보내기, BYOK AI 3사 연동","category":"tool","liveUrl":"https://teaching-atelier.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/teaching-atelier","isLive":true,"isPrivate":true,"created":"2026-08-08"},
     {"name":"vibe-coding-training","title":"교사 바이브코딩 연수(90분×3회)","desc":"\"AI에게 일 시켜 나만의 수업 도구 만들기\" 연수 자료 전 3회차 — 1 뽑기·모둠 편성기 / 2 회신 집계기 / 3 통지문 도우미, 회차별 코드 페이지 제공","category":"guide","liveUrl":"https://vibe-coding-training-ivory.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/vibe-coding-training","isLive":true,"isPrivate":true,"created":"2026-08-08"},
     {"name":"baseball5-edu","title":"베이스볼5 배움터","desc":"중학교 체육수업용 베이스볼5 학습 웹앱 — WBSC 공식 규칙서 기반 규칙 카드 8장, 공식 영상 18편, 경기장 시뮬레이션, 퀴즈 12문항","category":"pe","liveUrl":"https://baseball5-edu.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/baseball5-edu","isLive":true,"isPrivate":true,"created":"2026-08-09"},
+    {"name":"teeball-edu","title":"티볼 배움터","desc":"중학교 체육수업용 티볼 학습 웹앱 — 한국티볼협회 공식 규칙 기반 규칙 카드 8장, 영상 12편, 타구 판정 시뮬레이터·2스트라이크 카운터, 퀴즈 12문항","category":"pe","liveUrl":"https://teeball-edu.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/teeball-edu","isLive":true,"isPrivate":true,"created":"2026-08-09"},
     {"name":"running-edu","title":"달리기 배움터","desc":"중학교 체육수업용 달리기(육상 트랙) 학습 웹앱 — 영상 12편, 규칙 카드 8장, 배턴 테이크오버 존 판정기·부정출발 반응속도 테스트, 퀴즈 12문항","category":"pe","liveUrl":"https://running-edu.vercel.app","githubUrl":"https://github.com/AHNHYUNGJIN/running-edu","isLive":true,"isPrivate":true,"created":"2026-08-09"}
   ];
 
@@ -1748,9 +1749,20 @@
     document.getElementById('gZoomOut').addEventListener('click', () => zoomAt(W / 2, H / 2, 0.77));
     document.getElementById('gFit').addEventListener('click', () => { stopAutoFit(); fit(); run(); });
     document.getElementById('gShuffle').addEventListener('click', shuffle);
-    document.getElementById('gFull').addEventListener('click', () => {
+    const fullBtn = document.getElementById('gFull');
+    fullBtn.addEventListener('click', () => {
       if (document.fullscreenElement) document.exitFullscreen();
       else if (wrap.requestFullscreen) wrap.requestFullscreen().catch(() => {});
+    });
+    /* 전체화면일 땐 아이콘·설명을 '나가기'로 뒤집는다 */
+    const ICON_EXPAND = '<path d="M15 3h6v6M21 3l-7 7M9 21H3v-6M3 21l7-7"/>';
+    const ICON_SHRINK = '<path d="M14 10h6V4M14 10l7-7M10 14H4v6M10 14l-7 7"/>';
+    document.addEventListener('fullscreenchange', () => {
+      const on = document.fullscreenElement === wrap;
+      fullBtn.querySelector('svg').innerHTML = on ? ICON_SHRINK : ICON_EXPAND;
+      fullBtn.setAttribute('aria-label', on ? '전체 화면 나가기' : '전체 화면');
+      fullBtn.setAttribute('title', on ? '전체 화면 나가기 (Esc)' : '전체 화면');
+      if (active) resize();
     });
 
     if (window.ResizeObserver) new ResizeObserver(() => { if (active) resize(); }).observe(wrap);
